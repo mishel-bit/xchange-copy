@@ -42,8 +42,9 @@ class AuthController < ApplicationController
          else
              if @user.valid?
                  @user.save
+                 UserMailer.with(user: @user).welcome_email.deliver_later
                  cookies.encrypted[:authorization] = @user.token
-                 redirect_to root_path
+                #  redirect_to root_path
 
              else
                  @user.errors.add(:password,"not equal")  
