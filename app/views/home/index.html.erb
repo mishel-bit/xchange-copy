@@ -1,0 +1,42 @@
+<div class="relative overflow-x-auto mt-2">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-md text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    SYMBOL
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    COMPANY NAME
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    PRICE
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    CHANGE PERCENT
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    LATEST PRICE
+                </th>
+                <th colspan="2" class="px-6 py-3">
+                    TRADE
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+                <% @all.each do | list | %>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+    
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+               <%= list.symbol %>
+                </th>   
+                <td class="px-6 py-4"><%= list.company_name %></td>
+                <td class="px-6 py-4"><%= list.iex_realtime_price %></td>
+                <td class="px-6 py-4"><%= list.change_percent %></td>
+                <td class="px-6 py-4"><%= list.latest_price %></td>
+                <td class="px-6 py-4 text-center"><%= link_to "Buy" %></td>
+                <td class="px-6 py-4 text-center"><%= link_to "Sell" %></td>
+                <% end %>     
+            </tr>
+        </tbody>
+    </table>
+</div>
