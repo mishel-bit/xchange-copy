@@ -12,10 +12,12 @@
   </head>
 
   <body>
-    <% if controller_name !="auth" %>
-      <%= render "header"%> 
-    <%end%>
-    
-    <%= yield %><a>
+    <div class="container-fluid">
+      <% if controller_name !="auth" %>
+        <%= render "header"%> 
+      <%end%>
+      
+      <%= yield %><a>
+    </div>
   </body>
 </html>
