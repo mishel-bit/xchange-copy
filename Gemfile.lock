@@ -251,6 +251,7 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  faraday
   iex-ruby-client
   importmap-rails
   jbuilder
