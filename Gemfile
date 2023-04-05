@@ -73,5 +73,5 @@ end
 
 gem "tailwindcss-rails", "~> 2.0"
 gem 'sendgrid-ruby'
-
+gem 'faraday'
 gem 'mail'
