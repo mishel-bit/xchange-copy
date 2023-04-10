@@ -1,14 +1,14 @@
 <div class="flex h-screen overflow-hidden justify-between dark:bg-gray-900">
     <div class="flex flex-col items-center align-items justify-center mx-auto">
         <a href="">
-            <h1 class="mb-4 text-xl font-bold leading-none text-primary-500 text-gray-800 md:text-5xl lg:text-4xl dark:text-white ">XCHANGE</h1>    
+            <h1 class="mb-4 text-xl font-bold leading-none text-secondary-300 text-gray-800 md:text-5xl lg:text-4xl dark:text-secondary-500 ">XCHANGE</h1>    
             <h2 class="mb-4 text-xl leading-none tracking-[.25em]  text-gray-800 md:text-5xl lg:text-4xl dark:text-white ">Start trading now<span class="text-secondary-400">.</span></h2>     
         </a>
     </div>
     
     <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-tl-[40px] shadow dark:bg-gray-800">
         <div class="h-screen flex flex-col align-items justify-center mx-auto">
-            <h2 class="text-2xl font-bold text-secondary-400 dark:text-white">
+            <h2 class="text-2xl font-bold text-secondary-300 dark:text-white">
                 <%= type === "sign_up" ? 'Sign up' : 'Sign in to your account'%>
             </h2>
 
@@ -27,27 +27,27 @@
                     <% end %>
                     <div>
                         <%= f.label :Email, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-                        <%= f.text_field :email, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" %>
+                        <%= f.text_field :email, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
                     </div>
                     <div>
                         <%= f.label :Password, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"  %>
-                        <%= f.password_field :password, class:"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" %>
+                        <%= f.password_field :password, class:"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
                     </div>
                     <div>
                         <%if type === "sign_up"%>
                             <div>
                                 <%= f.label 'Confirm Password',  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-                                <%= f.password_field :password_confirmation, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" %>
+                                <%= f.password_field :password_confirmation, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
                             </div>
-                            <%=f.submit 'Create Account', class: "w-full relative mt-5 px-5 py-3 text-base font-medium text-center text-white bg-secondary-400 rounded-full hover:bg-secondary-600 focus:ring-4 focus:ring-secondary-400 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"%>
+                            <%=f.submit 'Create Account', class: "w-full relative mt-5 px-5 py-3 text-base font-medium text-center text-white bg-secondary-300 rounded-full hover:bg-secondary-600 focus:ring-4 focus:ring-secondary-300 sm:w-auto dark:bg-secondary-600 dark:hover:bg-secondary-700 dark:focus:ring-secondary-800"%>
 
                             <div class="mt-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                                Already have an account? <%= link_to 'Sign in', sign_in_path, class:"text-primary-500 font-bold hover:underline dark:text-primary-500"%>
+                                Already have an account? <%= link_to 'Sign in', sign_in_path, class:"text-secondary-300 font-bold hover:underline dark:text-secondary-500"%>
                             </div>
                         <%else%>
-                            <%=f.submit 'Login to your account', class: "w-full relative mt-5 px-5 py-3 text-base font-medium text-center text-white bg-secondary-400 rounded-full hover:bg-secondary-600 focus:ring-4 focus:ring-secondary-400 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"%>
+                            <%=f.submit 'Login to your account', class: "w-full relative mt-5 px-5 py-3 text-base font-medium text-center text-white bg-secondary-300 rounded-full hover:bg-secondary-600 focus:ring-4 focus:ring-secondary-300 sm:w-auto dark:bg-secondary-600 dark:hover:bg-secondary-700 dark:focus:ring-secondary-800"%>
                             <div class="mt-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                                Don't have an account? <%= link_to 'Sign up', sign_up_path, class:"text-primary-500 font-bold hover:underline dark:text-primary-500"%>
+                                Don't have an account? <%= link_to 'Sign up', sign_up_path, class:"text-secondary-300 font-bold hover:underline dark:text-secondary-500"%>
                             </div>
                         <%end%>
                     </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_02_085217) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_10_093153) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_02_085217) do
     t.boolean "email_confirmed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "account_status", default: "pending"
+    t.integer "balance", default: 1000
   end
 
 end

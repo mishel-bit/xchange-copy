@@ -1,0 +1,21 @@
+
+<% content_for :aside do %>
+    <%= render "sidebar"%> 
+<% end %>
+    
+<% content_for :main_content do %>
+    <div class="p-4">
+        <div class="mb-4 lg:mb-0">
+            <%= render "nav"%>
+        </div>
+        <div class="flex flex-col mt-8">
+            <div class="overflow-x-auto rounded-lg">
+                <div class="inline-block min-w-full align-middle">
+                    <div class="overflow-hidden shadow sm:rounded-lg">
+                        <%= render "table"%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<% end %>
