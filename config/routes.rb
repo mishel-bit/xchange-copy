@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  # root "articles#index"
+
   root "home#index"
   
   get '/sign_in' => 'session#sign_in'
@@ -12,5 +12,8 @@ Rails.application.routes.draw do
   get '/sign_up' => 'user#sign_up'
   post '/sign_up' => 'user#new_account'
 
-  # resources :users
+    namespace :admin do
+      resources :users
+    end
+
 end

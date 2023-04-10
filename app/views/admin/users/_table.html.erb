@@ -1,0 +1,28 @@
+<table class="min-w-full bg-white divide-y divide-gray-200 dark:divide-gray-600">
+    <thead class="bg-primary-700 dark:bg-gray-700">
+        <tr class="text-xs text-white font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
+            <th scope="col" class="p-4">#</th>
+            <th scope="col" class="p-4">Email</th>
+            <th scope="col" class="p-4">Account Status</th>
+             <th scope="col" class="p-4">Created at</th>
+            <th scope="col" class="p-4">Updated at</th>
+            <th scope="col" class="p-4">Action</th>
+        </tr>
+    </thead>
+
+    <tbody class="mx-2 my-2 dark:bg-gray-800">
+        <% @users.each do |user| %>
+            <tr class="text-sm font-normal text-gray-900 whitespace-nowrap dark:text-white">
+                <td class="p-4"><%= user.id %></td>
+                <td class="p-4"><%= user.email %></td>
+                 <td class="p-4"><%= user.account_status %></td>
+                <td class="p-4"><%= user.created_at.strftime('%Y-%m-%d')%></td>
+                <td class="p-4"><%= user.updated_at.strftime('%Y-%m-%d')%></td>
+                <td class="flex gap-5 mt-2">
+                    <%= link_to 'Edit', edit_admin_user_path(user), class: "bg-gray-400 rounded-md px-3 py-2 text-sm text-white font-medium hover:bg-gray-600"%> 
+                    <%= link_to  'Delete', admin_user_path(user), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "bg-secondary-300 text-white rounded-md  px-3 py-2 hover:bg-secondary-600 focus:ring-4 focus:ring-secondary-300 dark:bg-secondary-600 dark:hover:bg-secondary-700 dark:focus:ring-secondary-800" %> 
+                </td>
+            <tr>
+        <% end %>
+    </tbody>
+</table>

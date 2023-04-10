@@ -9,13 +9,24 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= javascript_import_module_tag "dark-mode", "sidebar" %>
   </head>
+    <body>
+      <% if controller_name !="session" && controller_name !="user"  %>
+        <%= render "header"%> 
 
-  <body>
-    <% if controller_name !="session" && controller_name !="user"  %>
-      <%= render "header"%> 
-    <%end%>
-    
-    <%= yield %><a>
+        <div class="flex h-screen pt-16 overflow-hidden">
+          <%= yield :aside%>
+          <div id="main-content" class="bg-gray-50 relative w-full h-full overflow-y-auto lg:ml-64 dark:bg-gray-900">
+            <main>
+              <div class="px-4 pt-6">
+                <%= yield :main_content%>
+              </div>
+            </main>
+          </div>
+      <% else %>
+          <%= yield %>
+      <% end %>
   </body>
 </html>
+

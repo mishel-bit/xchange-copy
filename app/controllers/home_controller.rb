@@ -7,5 +7,9 @@ class HomeController < ApplicationController
  private
  def get_user
      @user = User.find_by_email(cookies.encrypted[:user_id])
+    
+     if @user.admin?
+        redirect_to admin_users_path
+     end
  end
 end
