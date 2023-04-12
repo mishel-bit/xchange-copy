@@ -1,5 +1,5 @@
 class UserNotifierMailer < ApplicationMailer
-    default :from => 'xchange.your.stock@gmail.com'
+    default :from => 'xchange.stock@zohomail.com'
 
     def send_signup_email(user)
         @user = user
