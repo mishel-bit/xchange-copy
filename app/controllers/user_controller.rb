@@ -15,7 +15,8 @@ class UserController < ApplicationController
         else
             if @user.valid?
                 @user.save
-                UserNotifierMailer.send_signup_email(@user).deliver
+                UserNotifierMailer.send_signup_email(@user).deliver_later
+                # UserNotifierMailer.with(@user).send_signup_email.deliver_later
                 cookies.encrypted[:authorization] = @user.token
                 redirect_to root_path
             else
