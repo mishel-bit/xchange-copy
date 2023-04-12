@@ -6,6 +6,5 @@ class UserNotifierMailer < ApplicationMailer
         mail( to: @user.email,
         subject: 'Thanks for signing up' )
     end
-    default from: 'notifications@example.com'
 
 end
