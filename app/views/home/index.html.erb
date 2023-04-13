@@ -9,32 +9,24 @@
                     COMPANY NAME
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    PRICE
+                    PRIMARY EXCHANGE
                 </th>
                 <th scope="col" class="px-6 py-3">
                     CHANGE PERCENT
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    LATEST PRICE
-                </th>
-                <th colspan="2" class="px-6 py-3">
-                    TRADE
+                <th scope="col" class="px-6 py-3 text-center">
+                    BUY/SELL
                 </th>
             </tr>
         </thead>
         <tbody>
-                <% @all.each do | list | %>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-    
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-               <%= list.symbol %>
-                </th>   
+            <% @show.each do | list | %>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"><%= list.symbol %></th>   
                 <td class="px-6 py-4"><%= list.company_name %></td>
-                <td class="px-6 py-4"><%= list.iex_realtime_price %></td>
-                <td class="px-6 py-4"><%= list.change_percent %></td>
-                <td class="px-6 py-4"><%= list.latest_price %></td>
-                <td class="px-6 py-4 text-center"><%= link_to "Buy", portfolios_path %></td>
-                <td class="px-6 py-4 text-center"><%= link_to "Sell" %></td>
+                <td class="px-6 py-4"><%= list.symbol %></td>
+                <td class="px-6 py-4"><%= list.primary_exchange %></td>
+                <td class="px-6 py-4 text-center"><%= link_to raw('View Market <i class="fa-solid fa-magnifying-glass-chart"></i>'), show_portfolio_path(:stock_symbol => list.symbol) %></td>
                 <% end %>     
             </tr>
         </tbody>
