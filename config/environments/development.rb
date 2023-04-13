@@ -54,7 +54,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
   address:              'smtp.zoho.com',
   port:                 587,
-  domain:               'https://xchange-lqn1.onrender.com',
+  domain:               'http:localhost:3000',
   user_name:            Rails.application.credentials.dig(:zoho, :user_name),
   password:             Rails.application.credentials.dig(:zoho, :password),
   authentication:       'plain',
