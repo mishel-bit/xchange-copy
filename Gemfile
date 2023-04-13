@@ -73,3 +73,4 @@ end
 
 gem "tailwindcss-rails", "~> 2.0"
 gem 'faraday'
+gem "rails_charts"
