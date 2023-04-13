@@ -1,14 +1,12 @@
 class PortfoliosController < ApplicationController
 
+
   def index
     @portfolios = Portfolio.all
+    
   end
 
   def show
-    @chart_stock = get_chart_data
-    @logo = $client.logo(params[:stock_symbol])
-    $company = $client.company(params[:stock_symbol])
-    @portfolio = Portfolio.new
   end
 
   def new
@@ -64,11 +62,6 @@ class PortfoliosController < ApplicationController
 
 
   def portfolio_params
-    params.require(:portfolio).permit(:symbol, :company_name, :amount)
-  end
-
-  def get_chart_data
-    @chart = $client.chart(params[:stock_symbol])
 
     chart_arr = @chart.reduce([]) { |init, curr|
       init.push([curr['label'], curr['open'], curr['close'], curr['high'], curr['low']]);
