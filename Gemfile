@@ -77,3 +77,4 @@ gem 'sendgrid-ruby'
 
 gem 'mail'
 gem 'faraday'
+gem "rails_charts"
