@@ -14,30 +14,10 @@ class User < ApplicationRecord
   end
 
   def generate_token
-   self.token = (0...50).map {('a'..'z').to_a[rand(26)]}.join
+   self.token = random_string
    
    self.save
   end
-
-  # def update_password!(reset_password_params)
-  #   if reset_password_params[:token] == password_reset_token
-  #     self.password = reset_password_params[:password]
-  #     self.password_confirmation = reset_password_params[:password]
-  #     self.password_reset_token = nil
-
-  #     self.save
-  #   end
-  # end
-
-  # def send_reset_password_email
-  #   UserNotifierMailer.send_reset_password_email(@user).deliver_later
-  # end
-  
-  # def generate_password_reset_token
-  #   self.password_reset_token = (0...50).map {('a'..'z').to_a[rand(26)]}.join
-    
-  #   self.save
-  # end
   
   def generate_password_reset_token
     self.password_reset_token = random_string
@@ -45,9 +25,7 @@ class User < ApplicationRecord
   end
 
   private
-  # def user_params
-  #   params.permit(:email)
-  # end
+
   def reset_password_params
     params.permit(:email, :token, :password, :password_confirmation)
   end
