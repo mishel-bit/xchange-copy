@@ -38,6 +38,8 @@ end
      redirect_to sign_in_path
  end
 
+
+
  private
 
  def user_params

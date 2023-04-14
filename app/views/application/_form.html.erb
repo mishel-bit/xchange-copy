@@ -45,6 +45,9 @@
                                 Already have an account? <%= link_to 'Sign in', sign_in_path, class:"text-secondary-300 font-bold hover:underline dark:text-secondary-500"%>
                             </div>
                         <%else%>
+                            <div class="mt-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                                <%= link_to 'Forgot Password?', forgot_password_path, class:"text-secondary-300 font-bold hover:underline dark:text-secondary-500"%>
+                            </div>
                             <%=f.submit 'Login to your account', class: "w-full relative mt-5 px-5 py-3 text-base font-medium text-center text-white bg-secondary-300 rounded-full hover:bg-secondary-600 focus:ring-4 focus:ring-secondary-300 sm:w-auto dark:bg-secondary-600 dark:hover:bg-secondary-700 dark:focus:ring-secondary-800"%>
                             <div class="mt-2 text-sm font-medium text-gray-500 dark:text-gray-400">
                                 Don't have an account? <%= link_to 'Sign up', sign_up_path, class:"text-secondary-300 font-bold hover:underline dark:text-secondary-500"%>
