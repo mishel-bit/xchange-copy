@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_13_233025) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_16_025705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_233025) do
     t.string "account_status", default: "pending"
     t.integer "balance", default: 1000
     t.string "password_reset_token"
+    t.integer "verification_code"
   end
 
 end

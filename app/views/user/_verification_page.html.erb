@@ -1,0 +1,50 @@
+
+<% content_for :aside do %>
+    <%= render "sidebar"%> 
+<% end %>
+
+<% content_for :main_content do %>
+    <div class="flex flex-col overflow-hidden items-center justify-center dark:bg-gray-900">
+        <div class="w-full max-w-xl space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
+            <% if @user_verify.email_confirmed? %>
+                <h4 class="mb-2 text-xl  tracking-tight text-gray-900 md:text-4xl lg:text-2xl dark:text-white">
+                    Your email address is verified
+                </h4>  
+            <% else %>
+                <h4 class="mb-2 text-xl  tracking-tight text-gray-900 md:text-4xl lg:text-2xl dark:text-white">
+                    Verify Your Email Address
+                </h4>  
+                <div class="mt-8 space-y-6">
+                    <%= form_with model: @user, url: verify_path, local: true do |f| %>
+                        <% if flash[:notice] %>
+                            <div class="notice flex p-4 text-sm text-gray-800 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-300" role="alert">
+                                <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                <span class="sr-only">Info</span>
+                                <span class="font-medium"><%= flash[:notice] %></span>
+                            </div>
+                        <% end %>
+                        <% if @user.errors.any? %>
+                            <div class="flex p-4 text-sm text-gray-800 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-300" role="alert">
+                                <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                <span class="sr-only">Info</span>
+                                    <ul>
+                                        <% @user.errors.full_messages.each do |message| %>
+                                            <li class="font-medium"><%= message %></li>
+                                        <% end %>
+                                    </ul>
+                            </div>
+                        <% end %>
+                        <div>
+                            <%= f.label 'Verification Code',  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
+                            <%= f.text_field :verification_code, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
+                        </div>
+
+                        <%=f.submit 'Submit', class: "w-full mt-5 px-5 py-3 text-base font-medium text-center text-white bg-secondary-300 rounded-lg hover:bg-secondary-800 focus:ring-4 focus:ring-secondary-300 sm:w-auto dark:bg-secondary-600 dark:hover:bg-secondary-700 dark:focus:ring-secondary-800"%>
+
+                    <% end %>
+                </div>
+            <% end %>
+            
+        </div>
+    </div>
+<% end%>

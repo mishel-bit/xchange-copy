@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   post '/sign_in' => 'session#new_session'
   delete '/logout' => 'session#logout'
 
+  get '/verify' => 'user#verify'
+  post '/verify' => 'user#verify_email'
+  
   get '/forgot_password' => 'user#forgot_password'
   post '/forgot_password' => 'user#password_reset_email'
   get '/reset_password/:token' => 'user#reset_password'
