@@ -3,7 +3,7 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { in: 6..20 }, unless: -> { password.blank? }
   
   has_secure_password
-  after_create :generate_token, :generate_password_reset_token, :generate_email_token
+  after_create :generate_token
 
   scope :filter_by_account_status, -> (account_status) { where account_status: account_status }
   scope :admin, -> { where admin: true }
@@ -24,11 +24,6 @@ class User < ApplicationRecord
    self.save
   end
   
-  def generate_email_token
-    self.token = random_string
-    
-    self.save
-   end
 
    def generate_verification_code
     self.verification_code = random_six_digits
