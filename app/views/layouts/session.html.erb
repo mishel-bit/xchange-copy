@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Xchange</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <%= csrf_meta_tags %>
+        <%= csp_meta_tag %>
+        <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+        <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+        <%= javascript_importmap_tags %>
+        <%= javascript_import_module_tag "dark-mode", "sidebar" %>
+    </head>
+    <body>
+        <div class="flex h-screen overflow-hidden justify-between dark:bg-gray-900">
+            <div class="flex flex-col items-center align-items justify-center mx-auto">
+                <a href="">
+                    <h1 class="mb-4 text-xl font-bold leading-none text-secondary-300 text-gray-800 md:text-5xl lg:text-4xl dark:text-secondary-500 ">XCHANGE</h1>    
+                    <h2 class="mb-4 text-xl leading-none tracking-[.25em]  text-gray-800 md:text-5xl lg:text-4xl dark:text-white ">Start trading now<span class="text-secondary-400">.</span></h2>     
+                </a>
+            </div>
+            
+            <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-tl-[40px] shadow dark:bg-gray-800">
+                <div class="h-screen flex flex-col align-items justify-center mx-auto">
+                    <%= yield %>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

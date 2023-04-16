@@ -1,6 +1,6 @@
 class SessionController < ApplicationController
     skip_before_action :authenticate_user
-
+    layout 'session', only: [:sign_in, :new_session]
     #get /sign_in
     def sign_in
         if !cookies.encrypted[:authorization]

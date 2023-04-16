@@ -1,6 +1,6 @@
 class UserController < ApplicationController
   skip_before_action :authenticate_user, except: [:verify, :verify_email]
-  layout 'verify', only: [:verify, :verify_email]
+  layout "session", except: [:verify, :verify_email, :resend_code]
   #get /sign_up
   def sign_up
     @user = User.new

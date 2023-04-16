@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Xchange</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+      <title>Xchange</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <%= csrf_meta_tags %>
+      <%= csp_meta_tag %>
+      <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-    <%= javascript_import_module_tag "dark-mode", "sidebar" %>
+      <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+      <%= javascript_importmap_tags %>
+      <%= javascript_import_module_tag "dark-mode", "sidebar" %>
   </head>
-    <body>
-      <% if controller_name !="session" && controller_name !="user"  %>
-        <%= render "header"%> 
+  <body>
 
-        <div class="flex h-screen pt-16 overflow-hidden">
-          <%= yield :aside%>
-          <div id="main-content" class="bg-gray-50 relative w-full h-full overflow-y-auto lg:ml-64 dark:bg-gray-900">
-            <main>
-              <div class="px-4 pt-6">
-                <%= yield :main_content%>
+    <%= render "header"%> 
+
+    <div class="flex h-screen pt-16 overflow-hidden">
+        <aside id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hidden w-64 h-full pt-16 font-normal duration-75 lg:flex transition-width" aria-label="Sidebar">
+          <div class="relative flex flex-col flex-1 min-h-0 pt-0 border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col flex-1 pb-4 overflow-y-auto">
+              <div class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                <%= yield :aside%>
               </div>
-            </main>
+            </div>
           </div>
-      <% else %>
-          <%= yield %>
-      <% end %>
+        </aside>
+        <div id="main-content" class="bg-gray-50 relative w-full h-full overflow-y-auto lg:ml-64 dark:bg-gray-900">
+            <main>
+                <div class="px-4 pt-6">
+                <%= yield :main_content%>
+                </div>
+            </main>
+        </div>
+    </div>
+
   </body>
 </html>
 
