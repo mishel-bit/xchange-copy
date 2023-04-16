@@ -40,6 +40,7 @@ class UserController < ApplicationController
   #post /forgot_password
   def password_reset_email
     if user = User.find_by(email: sign_up_params[:email])
+      user.generate_password_reset_token
       UserResetPasswordMailer.send_reset_password_email(user).deliver_later
       redirect_to forgot_password_path, notice: 'A password reset link has been sent to your email'
     else
