@@ -41,9 +41,9 @@ class UserController < ApplicationController
   def password_reset_email
     if user = User.find_by(email: sign_up_params[:email])
       UserResetPasswordMailer.send_reset_password_email(user).deliver_later
-      redirect_to forgot_password_path, notice: 'A password resend link has been sent to your email'
+      redirect_to forgot_password_path, notice: 'A password reset link has been sent to your email'
     else
-      render json: { error: 'not found'}, status: 404
+      redirect_to forgot_password_path, notice: 'Invalid email'
     end
   end
   # get '/reset_password/:token
