@@ -1,6 +1,6 @@
 class UserController < ApplicationController
-  skip_before_action :authenticate_user
-  
+  skip_before_action :authenticate_user, except: [:verify, :verify_email]
+  layout 'verify', only: [:verify, :verify_email]
   #get /sign_up
   def sign_up
     @user = User.new
@@ -15,9 +15,16 @@ class UserController < ApplicationController
         else
             if @user.valid?
                 @user.save
-                UserNotifierMailer.send_signup_email(@user).deliver_later
+                @user.generate_verification_code
+                UserVerificationMailer.send_verification_email(@user).deliver_later
                 cookies.encrypted[:authorization] = @user.token
-                redirect_to root_path
+                cookies.encrypted[:user_id] = @user.email
+                if @user.email_confirmed?
+                  redirect_to root_path
+                else
+                  redirect_to verify_path
+                end
+                
             else
                 @user.errors.add(:password,"not equal")  
             end  
@@ -53,13 +60,39 @@ class UserController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
+  
+  # get '/verify
+  def verify
+    @user_verify = User.find_by_email(cookies.encrypted[:user_id])
+    @user = User.new
+  end
 
+  # post '/verify
+  def verify_email
+    @user_verify = User.find_by_email(cookies.encrypted[:user_id])
+    @user = User.find_by_email(cookies.encrypted[:user_id])
+    if @user
+      if @user.verification_code === code_params[:verification_code].to_i
+        if @user.update(:email_confirmed => true)
+          redirect_to root_path
+        end
+      else
+        redirect_to :verify, notice: "Invalid Verification Code"
+      end
+    end
+  end
 
 
   private
+
+  def code_params
+    params.require(:user).permit(:verification_code) 
+  end
+
   def password_params
     params.permit(:password, :password_confirmation) 
   end
+  
   def sign_up_params
     params.require(:user).permit(:email, :password, :password_confirmation) 
   end
