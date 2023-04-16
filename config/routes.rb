@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   get '/verify' => 'user#verify'
   post '/verify' => 'user#verify_email'
+  post '/resend' => 'user#resend_code'
   
   get '/forgot_password' => 'user#forgot_password'
   post '/forgot_password' => 'user#password_reset_email'

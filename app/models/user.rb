@@ -12,7 +12,6 @@ class User < ApplicationRecord
   def random_string
     (0...50).map {('a'..'z').to_a[rand(26)]}.join
   end
-
     
   def random_six_digits
     rand.to_s[2..7]
@@ -30,7 +29,6 @@ class User < ApplicationRecord
     
     self.save
    end
-   
    
   def generate_password_reset_token
     self.password_reset_token = random_string

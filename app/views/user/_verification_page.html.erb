@@ -38,7 +38,9 @@
                             <%= f.label 'Verification Code',  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
                             <%= f.text_field :verification_code, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
                         </div>
-
+                        <div class=" mt-2">
+                            <%= link_to  'Resend Code',resend_path, data: { turbo_method: :post}, class:"text-secondary-300 font-bold hover:underline dark:text-secondary-500"%>
+                        </div>
                         <%=f.submit 'Submit', class: "w-full mt-5 px-5 py-3 text-base font-medium text-center text-white bg-secondary-300 rounded-lg hover:bg-secondary-800 focus:ring-4 focus:ring-secondary-300 sm:w-auto dark:bg-secondary-600 dark:hover:bg-secondary-700 dark:focus:ring-secondary-800"%>
 
                     <% end %>

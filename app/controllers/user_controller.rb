@@ -82,7 +82,16 @@ class UserController < ApplicationController
       end
     end
   end
-
+  # post '/resend'
+  def resend_code
+    @user_verify = User.find_by_email(cookies.encrypted[:user_id])
+    @user = User.find_by_email(cookies.encrypted[:user_id])
+    if @user
+      @user.generate_verification_code
+      UserVerificationMailer.send_verification_email(@user).deliver_later
+      redirect_to :verify, notice: "Verification code sent to your email"
+    end
+  end
 
   private
 
