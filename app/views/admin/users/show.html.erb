@@ -1,0 +1,15 @@
+<% content_for :aside do %>
+    <%= render "sidebar"%> 
+<% end %>
+<%= content_for :main_content do %>
+    <%= link_to 'Back',admin_users_path, class: "w-20 mb-4 border border-secondary-300 bg-secondary-300 text-white rounded-md px-3 py-2 text-gray-900 text-sm font-medium"%> 
+    <div class="w-full max-w-xl p-6 bg-white space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
+        <div class="mt-5 mb-5">
+            <p class="pb-5 text-xl font-bold"><%= @user.email %></p>
+            <p class="pb-5 text-sm"><span>Created at </span> <%= @user.created_at.strftime('%B %d, %Y') %></p>
+            <p class="pb-5 text-sm"><span>Updated at </span> <%= @user.updated_at.strftime('%B %d, %Y') %></p>
+            <p class="pb-5 text-sm"><span>Email Status: </span> <%= @user.email_confirmed? ? 'Verified' : 'Not Yet Verified'%></p>
+            <p class="pb-5 text-sm"><span>Account Status: </span> <%= @user.account_status %></p>
+        <div>
+    </div>
+<% end %>

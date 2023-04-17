@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   get '/sign_up' => 'user#sign_up'
   post '/sign_up' => 'user#new_account'
   
+  get '/account' => 'user#account_show'
+  post '/account' => 'user#account_edit'
+  
     namespace :admin do
       resources :users
     end
