@@ -19,6 +19,7 @@
                 <td class="p-4"><%= user.created_at.strftime('%Y-%m-%d')%></td>
                 <td class="p-4"><%= user.updated_at.strftime('%Y-%m-%d')%></td>
                 <td class="flex gap-5 mt-2">
+                    <%= link_to 'View', admin_user_path(user), class: "border border-gray-500 rounded-md px-3 py-2 text-gray-900 text-sm font-medium bg-white"%> 
                     <%= link_to 'Edit', edit_admin_user_path(user), class: "bg-gray-400 rounded-md px-3 py-2 text-sm text-white font-medium hover:bg-gray-600"%> 
                     <%= link_to  'Delete', admin_user_path(user), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "bg-secondary-300 text-white rounded-md  px-3 py-2 hover:bg-secondary-600 focus:ring-4 focus:ring-secondary-300 dark:bg-secondary-600 dark:hover:bg-secondary-700 dark:focus:ring-secondary-800" %> 
                 </td>

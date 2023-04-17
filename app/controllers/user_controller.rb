@@ -1,6 +1,6 @@
 class UserController < ApplicationController
   skip_before_action :authenticate_user, except: [:verify, :verify_email]
-  layout "session", except: [:verify, :verify_email, :resend_code]
+  layout "session", except: [:verify, :verify_email, :resend_code, :account_show]
   #get /sign_up
   def sign_up
     @user = User.new
@@ -75,7 +75,8 @@ class UserController < ApplicationController
     if @user
       if @user.verification_code === code_params[:verification_code].to_i
         if @user.update(:email_confirmed => true)
-          redirect_to root_path
+          UserPendingMailer.send_pending_email(@user).deliver_later
+          redirect_to account_path
         end
       else
         redirect_to :verify, notice: "Invalid Verification Code"
@@ -91,6 +92,12 @@ class UserController < ApplicationController
       UserVerificationMailer.send_verification_email(@user).deliver_later
       redirect_to :verify, notice: "Verification code sent to your email"
     end
+  end
+
+  # get '/account
+  def account_show
+    @user = User.find_by_email(cookies.encrypted[:user_id])
+    render template: 'user/account/index'
   end
 
   private
