@@ -14,19 +14,3 @@
         </div>
     </div>
 <% end %>
-<% content_for :aside do %>
-    <%= render "sidebar"%> 
-<% end %>
-<% content_for :main_content do %>
-    <div class="flex flex-col overflow-hidden items-center justify-center dark:bg-gray-900">
-        <div class="w-full max-w-xl space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
-            <h4 class="mb-2 text-xl  tracking-tight text-gray-900 md:text-4xl lg:text-2xl dark:text-white">
-                Account Details
-                 <p>Email: <%= @user.email%> <%= @user.email_confirmed? ? 'Verified' : 'Not Yet Verified'%></p>
-                 
-                <p>Your Account is <%= @user.account_status%></p>
-            </h4> 
-           
-        </div>
-    </div>
-<% end %>
