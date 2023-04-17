@@ -32,7 +32,7 @@ module Admin
       @user = User.find(params["id"])
       if @user.update(user_params)
         if @user.account_status == "approved"
-          UserApprovalMailer.send_approval_email(@user).deliver_later
+          UserMailer.send_approval_email(@user).deliver_later
         end
         redirect_to admin_users_path
       else

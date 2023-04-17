@@ -16,7 +16,7 @@ class UserController < ApplicationController
             if @user.valid?
                 @user.save
                 @user.generate_verification_code
-                UserVerificationMailer.send_verification_email(@user).deliver_later
+                UserMailer.send_verification_email(@user).deliver_later
                 cookies.encrypted[:authorization] = @user.token
                 cookies.encrypted[:user_id] = @user.email
                 if @user.email_confirmed?
@@ -41,7 +41,7 @@ class UserController < ApplicationController
   def password_reset_email
     if user = User.find_by(email: sign_up_params[:email])
       user.generate_password_reset_token
-      UserResetPasswordMailer.send_reset_password_email(user).deliver_later
+      UserMailer.send_reset_password_email(user).deliver_later
       redirect_to forgot_password_path, notice: 'A password reset link has been sent to your email'
     else
       redirect_to forgot_password_path, notice: 'Invalid email'
@@ -75,7 +75,7 @@ class UserController < ApplicationController
     if @user
       if @user.verification_code === code_params[:verification_code].to_i
         if @user.update(:email_confirmed => true)
-          UserPendingMailer.send_pending_email(@user).deliver_later
+          UserMailer.send_pending_email(@user).deliver_later
           redirect_to account_path
         end
       else
@@ -89,7 +89,7 @@ class UserController < ApplicationController
     @user = User.find_by_email(cookies.encrypted[:user_id])
     if @user
       @user.generate_verification_code
-      UserVerificationMailer.send_verification_email(@user).deliver_later
+      UserMailer.send_verification_email(@user).deliver_later
       redirect_to :verify, notice: "Verification code sent to your email"
     end
   end
