@@ -6,3 +6,5 @@ import "echarts/theme/dark"
 
 
 
+import "echarts"
+import "echarts/theme/dark"
