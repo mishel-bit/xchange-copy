@@ -76,3 +76,6 @@ gem "tailwindcss-rails", "~> 2.0"
 gem 'sendgrid-ruby'
 
 gem 'mail'
+gem 'faraday'
+gem "rails_charts"
+gem 'iex-ruby-client'
