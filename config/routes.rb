@@ -35,13 +35,4 @@ Rails.application.routes.draw do
   get '/portfolios' => 'portfolios#index'
   get '/portfolios/show' => 'portfolios#show', as: 'show_portfolio'
 
-  # resources :my_resources do
-  #   get '/:page', action: :index, controller: :home
-  # end
-  
-  get '/sign_in' => 'auth#sign_in'
-  get '/sign_up' => 'auth#sign_up'
-  post '/sign_in' => 'auth#new_session'
-  post '/sign_up' => 'auth#new_account'
-  delete '/logout' => 'auth#logout'
 end
