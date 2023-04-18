@@ -1,17 +1,33 @@
 class PortfoliosController < ApplicationController
 
-
   def index
     @portfolios = Portfolio.all
-    
   end
 
   def show
     @chart_stock = get_chart_data
+    @logo = $client.logo(params[:stock_symbol])
+    $company = $client.company(params[:stock_symbol])
+    @portfolio = Portfolio.new
   end
 
   def new
     @portfolio = Portfolio.new
+  end
+
+  def addnew
+    @portfolio = Portfolio.new(portfolio_params)
+    respond_to do |format|
+      if @portfolio.save
+          format.turbo_stream do
+             render turbo_stream: [
+              turbo_stream.update("frame1", partial: "add_portfolio")
+             ] 
+          end
+      else
+          render :new, status: :unprocessable_entity
+      end
+    end
   end
 
   def edit
@@ -19,10 +35,18 @@ class PortfoliosController < ApplicationController
 
   def create
     @portfolio = Portfolio.new(portfolio_params)
-    if @portfolio.save
-      redirect_to portfolios_path, notice: "New stocks has been added to Portfolio"
-    else
-      render :new, notice: :unproccessable_entity
+
+    respond_to do |format|
+      if @portfolio.save
+          format.turbo_stream do
+             render turbo_stream: [
+             # turbo_stream.update("sidepanel", partial: "sidepanel" ,locals: {symbol: @portfolios}),
+              turbo_stream.update("modal", "")
+             ] 
+          end
+      else
+          render :new, status: :unprocessable_entity
+      end
     end
   end
 
@@ -31,21 +55,20 @@ class PortfoliosController < ApplicationController
 
   private
 
-  def portfolio_params
-    params.require(:stock_symbol)
+  def get_portfolio
+    if params[:stock_symbol]
+    @portfolio = Portfolio.find(:symbol => params[:stock_symbol])
+    end
   end
 
-  def get_symbol
-    @symbol = Portfolio.find(params[:stock_symbol])
+
+
+  def portfolio_params
+    params.require(:portfolio).permit(:symbol, :company_name, :amount)
   end
 
   def get_chart_data
-    @client = IEX::Api::Client.new(
-      publishable_token: 'pk_06f0670b09884fe5aa66d394e4263f00',
-      secret_token: 'sk_f528b0c334f24d498705a205d72a7ec4',
-      endpoint: 'https://cloud.iexapis.com/v1'
-    )
-    @chart = @client.chart(params[:stock_symbol])
+    @chart = $client.chart(params[:stock_symbol])
 
     chart_arr = @chart.reduce([]) { |init, curr|
       init.push([curr['label'], curr['open'], curr['close'], curr['high'], curr['low']]);

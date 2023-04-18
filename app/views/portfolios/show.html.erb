@@ -1,50 +1,61 @@
-<% content_for :main_content do %>
+<% content_for :main_content do %>  
+  <%= @portfolio.inspect%>
+    <%= turbo_frame_tag "modal" do %>
+      <div class="">
+        <%= render "add_portfolio" %>
+      </div>
+    <% end %>
+    <div>
+      <h1><%= $company.company_name%></h1>
+      <h1>(<%= $company.symbol %>)</h1>
+      <%= image_tag @logo.url %>
+    </div>
 
-<h2 class="subtitle"><%= @symbol.inspect %></h2>
-<%= candlestick_chart @chart_stock,
-  class: 'box',
-  theme: 'sakura',
-  options: {
-    series: {
-      itemStyle: {
-        color: '#ec0000',
-        color0: '#008F28',
-        borderColor: '#8A0000',
-        borderColor0: '#008F28'
+    <%= candlestick_chart @chart_stock,
+      class: 'box',
+      theme: 'sakura',
+      options: {
+        series: {
+          itemStyle: {
+            color: '#ec0000',
+            color0: '#008F28',
+            borderColor: '#8A0000',
+            borderColor0: '#008F28'
+          }
+        },
+        title: {
+          text: "Price History Data"
+        },
+        xAxis: {
+          boundaryGap: false,
+          axisLine: { onZero: false },
+          splitLine: { show: false },
+          min: 'dataMin',
+          max: 'dataMax'
+        },
+        yAxis: {
+          scale: true,
+          splitArea: {
+            show: true
+          }
+        },
+        dataZoom: [
+          {
+            type: 'inside',
+            start: 50,
+            end: 100
+          },
+          {
+            show: true,
+            type: 'slider',
+            top: '90%',
+            start: 50,
+            end: 100
+          }
+        ],
       }
-    },
-    title: {
-      text: "Sample Report"
-    },
-    xAxis: {
-      boundaryGap: false,
-      axisLine: { onZero: false },
-      splitLine: { show: false },
-      min: 'dataMin',
-      max: 'dataMax'
-    },
-    yAxis: {
-      scale: true,
-      splitArea: {
-        show: true
-      }
-    },
-    dataZoom: [
-      {
-        type: 'inside',
-        start: 50,
-        end: 100
-      },
-      {
-        show: true,
-        type: 'slider',
-        top: '90%',
-        start: 50,
-        end: 100
-      }
-    ],
-  }
-%>
+    %>
 
+    <%= link_to "Buy", portfolio_transactions_path($company.symbol)%>
 <% end %>
 
