@@ -30,6 +30,10 @@ Rails.application.routes.draw do
       resources :users
     end
 
+    resources :portfolios do
+      resources :transactions
+      end
+
   get '/portfolios' => 'portfolios#index'
   get '/portfolios/show' => 'portfolios#show', as: 'show_portfolio'
 
