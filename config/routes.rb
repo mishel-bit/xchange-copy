@@ -30,9 +30,16 @@ Rails.application.routes.draw do
 
     resources :portfolios do
       resources :transactions
-      end
+    end
 
+  #portfolio routes
   get '/portfolios' => 'portfolios#index'
   get '/portfolios/show' => 'portfolios#show', as: 'show_portfolio'
 
+  # transaction routes
+  get '/portfolios/:symbol/transactions' => 'transactions#index'
+  post '/portfolios/:symbol/transactions' => 'transactions#create', as: 'create_transaction'
+  get '/portfolios/:symbol/transactions/new' => 'transactions#new', as: 'new_transaction'
+  get '/portfolios/:symbol/transactions/:id' => 'transactions#show'
+  patch '/portfolios/:symbol/transactions/:id' => 'transactions#update'
 end

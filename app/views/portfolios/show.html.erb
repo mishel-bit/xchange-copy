@@ -1,15 +1,22 @@
 <% content_for :main_content do %>  
-  <%= @portfolio.inspect%>
-    <%= turbo_frame_tag "modal" do %>
-      <div class="">
-        <%= render "add_portfolio" %>
-      </div>
+
+    <% if @setportfolio %>
+
+    <% else %>
+      <%= turbo_frame_tag "modal" do %>
+        <div class="">
+          <%= render "add_portfolio" %>
+        </div>
+      <% end %>
     <% end %>
+
     <div>
       <h1><%= $company.company_name%></h1>
       <h1>(<%= $company.symbol %>)</h1>
       <%= image_tag @logo.url %>
+      <%= @curr_price.inspect %>
     </div>
+
 
     <%= candlestick_chart @chart_stock,
       class: 'box',
@@ -55,7 +62,15 @@
         ],
       }
     %>
+    
+  <% if @setportfolio %>
+      <%= link_to "Buy", new_portfolio_transaction_path(portfolio_id: @setportfolio.id, :transaction => "buy") %>
+      <%= link_to "Sell",new_portfolio_transaction_path(portfolio_id: @setportfolio.id, :transaction => "sell") %>
+  <% else %>
+    <h1>Add to portfolio to buy/sell this stock.</h1>
+      <%= link_to "Buy" %>
+      <%= link_to "Sell" %>
+  <% end %>
 
-    <%= link_to "Buy", portfolio_transactions_path($company.symbol)%>
 <% end %>
 
