@@ -1,22 +1,32 @@
 class PortfoliosController < ApplicationController
+  before_action :get_portfolio
+  before_action :get_user
 
   def index
-    @portfolios = Portfolio.all
+    @portfolio = @user.portfolios
   end
 
   def show
     @chart_stock = get_chart_data
     @logo = $client.logo(params[:stock_symbol])
     $company = $client.company(params[:stock_symbol])
+    $curr_price = $client.quote('TSLA')
     @portfolio = Portfolio.new
+
+    #for refactor 
+    if params[:stock_symbol]
+      @setportfolio = Portfolio.find_by(symbol: params[:stock_symbol])
+    end
+
+
   end
 
   def new
-    @portfolio = Portfolio.new
+    @portfolio = @user.portfolios.new
   end
 
   def addnew
-    @portfolio = Portfolio.new(portfolio_params)
+    @portfolio = @user.portolios.new(portfolio_params)
     respond_to do |format|
       if @portfolio.save
           format.turbo_stream do
@@ -34,7 +44,7 @@ class PortfoliosController < ApplicationController
   end
 
   def create
-    @portfolio = Portfolio.new(portfolio_params)
+    @portfolio = @user.portfolios.new(portfolio_params)
 
     respond_to do |format|
       if @portfolio.save
@@ -57,11 +67,9 @@ class PortfoliosController < ApplicationController
 
   def get_portfolio
     if params[:stock_symbol]
-    @portfolio = Portfolio.find(:symbol => params[:stock_symbol])
-    end
+      @portfolio = Portfolio.where(symbol: params[:stock_symbol])
+      end
   end
-
-
 
   def portfolio_params
     params.require(:portfolio).permit(:symbol, :company_name, :amount)
@@ -77,5 +85,11 @@ class PortfoliosController < ApplicationController
     res
     end
   end
+
+  def get_user
+    @user = User.find_by_email(cookies.encrypted[:user_id])
+  end
+
+
 
 end

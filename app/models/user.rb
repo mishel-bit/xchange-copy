@@ -5,6 +5,9 @@ class User < ApplicationRecord
   has_secure_password
   after_create :generate_token
 
+  has_many :portfolios
+  has_many :transactions, through: :portfolios
+
   scope :filter_by_account_status, -> (account_status) { where account_status: account_status }
   scope :admin, -> { where admin: true }
   scope :trader, -> { where admin: false }
