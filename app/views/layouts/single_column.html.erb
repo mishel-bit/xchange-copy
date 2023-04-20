@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Xchange</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <%= csrf_meta_tags %>
+        <%= csp_meta_tag %>
+        <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+        <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+        <%= javascript_importmap_tags %>
+        <%= javascript_import_module_tag "dark-mode", "sidebar" %>
+    </head>
+    <body>
+        <%= render "header"%> 
+        <div class="flex pt-16 overflow-hidden">
+            <div id="main-content" class="relative w-full max-w-screen-2xl mx-auto h-full overflow-y-auto bg-gray-50 dark:bg-gray-900">
+                <main>
+                    <div class="px-4 pt-6 2xl:px-0">
+                        <%= yield %>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </body>
+</html>

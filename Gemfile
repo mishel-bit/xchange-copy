@@ -74,4 +74,7 @@ end
 gem "tailwindcss-rails", "~> 2.0"
 gem 'sendgrid-ruby'
 gem 'faraday'
-gem 'mail'gem "rails_charts"
+gem 'mail'
+gem "rails_charts"
+gem "stock_quote", '~> 3.0.0'
+gem 'kaminari'
