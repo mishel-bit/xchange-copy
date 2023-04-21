@@ -21,11 +21,11 @@
                 <% quote = quotes(stock.symbol) %>
                 <td title="<%= quote.company_name%>" class="cursor-pointer p-4 text-left"><%= quote.company_name.first(25) %>...</td>
                 <td class="p-4 text-right">$<%= quote.latest_price %></td>
-                <td class="p-4 text-right <%= color(quote.change_percent_s.first) %>"><%= quote.change_percent_s%></td>
+                <td class="p-4 text-right <%  if quote.change_percent_s %><%=color(quote.change_percent_s.first)%><% end%>"><%= quote.change_percent_s%></td>
                 <td class="p-4 text-right">$<%= format_m(quote.avg_total_volume)%>M</td>
                 <td class="p-4 text-right">$<%= format_m(quote.market_cap)%>M</td>
                 <td class="text-center">
-                    <%= link_to 'Trade', show_portfolio_path(:stock_symbol => stock.symbol), class: "text-primary-700 text-sm font-medium"%> 
+                    <%= link_to 'Trade', trade_path(stock.symbol), class: "text-primary-700 text-sm font-medium"%> 
                 </td>
             <tr>
         <% end %>

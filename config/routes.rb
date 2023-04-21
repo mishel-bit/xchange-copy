@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
+  
   root "home#index"
 
   
@@ -24,16 +22,14 @@ Rails.application.routes.draw do
   get '/account' => 'user#account_show'
   post '/account' => 'user#account_edit'
   
-    namespace :admin do
-      resources :users
-    end
+  get '/portfolio' => 'portfolio#index', as: 'portfolio'
+  get '/transactions' => 'transactions#index', as: 'transactions'
+  get '/trade/:symbol' => 'trade#index', as: 'trade'
+  post '/trade/:symbol/buy' => 'transactions#buy', as: 'buy_transaction'
+  post '/trade/:symbol/sell' => 'transactions#sell', as: 'sell_transaction'
 
-  get '/portfolios' => 'portfolios#index'
-  get '/portfolios/show' => 'portfolios#show', as: 'show_portfolio'
+  namespace :admin do
+    resources :users
+  end
 
-  # resources :my_resources do
-  #   get '/:page', action: :index, controller: :home
-  # end
-  
-  get '/:page', action: :index, controller: :home
 end

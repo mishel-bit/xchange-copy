@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
  protect_from_forgery with: :null_session
 
- before_action :authenticate_user
+ before_action :authenticate_user, except: [:routes]
+
 
  def root
  end 
@@ -20,5 +21,4 @@ class ApplicationController < ActionController::Base
          redirect_to sign_in_path
      end
  end
- 
 end
