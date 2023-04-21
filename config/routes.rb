@@ -35,4 +35,8 @@ Rails.application.routes.draw do
     resources :users
   end
 
+  namespace :admin do
+    get '/transactions' => 'transactions#index'
+  end
+
 end

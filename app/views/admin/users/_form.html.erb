@@ -1,5 +1,5 @@
 <% content_for :aside do %>
-    <%= render "sidebar"%> 
+    <%= render "admin/sidebar"%> 
 <% end %>
     
 <% content_for :main_content do %>
@@ -25,14 +25,16 @@
                         <%= f.label :Email,  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
                         <%= f.text_field :email, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
                     </div>
-                    <div>
-                        <%= f.label :Password,  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
-                        <%= f.password_field :password, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
-                    </div>
-                    <div>
-                        <%= f.label 'Confirm Password',  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-                        <%= f.password_field :password_confirmation, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-500 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
-                    </div>
+                    <% if type === "new"%>
+                        <div>
+                            <%= f.label :Password,  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
+                            <%= f.password_field :password, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
+                        </div>
+                        <div>
+                            <%= f.label 'Confirm Password',  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                            <%= f.password_field :password_confirmation, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-500 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
+                        </div>
+                    <% end %>
                     <div>
                         <%= f.label 'Account Status',  class: "block text-sm font-medium text-gray-900 dark:text-white"%>
                         <%= f.select(:account_status,  ['pending', 'approved'], {}, { :class => "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" }) %>
