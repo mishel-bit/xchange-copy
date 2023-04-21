@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   
   get '/portfolio' => 'portfolio#index', as: 'portfolio'
   get '/transactions/:id' => 'transactions#index', as: 'transactions'
+  get '/transactions' => 'transactions#show', as: 'show_transactions'
   get '/trade/:symbol' => 'trade#index', as: 'trade'
   post '/trade/:symbol/buy' => 'transactions#buy', as: 'buy_transaction'
   post '/trade/:symbol/sell' => 'transactions#sell', as: 'sell_transaction'

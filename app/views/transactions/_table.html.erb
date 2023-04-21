@@ -1,0 +1,29 @@
+<table class="min-w-full bg-white divide-y divide-gray-200 dark:divide-gray-600">
+    <thead class="bg-gray-100 text-gray-900 dark:bg-gray-700">
+        <tr class="text-xs text-gray-900 font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
+            <th scope="col" class="p-4">#</th>
+            <th scope="col" class="p-4">Symbol</th>
+            <th scope="col" class="p-4">Type</th>
+            <th scope="col" class="p-4">Amount</th>
+            <th scope="col" class="p-4">Price</th>
+            <th scope="col" class="p-4">Total</th>
+            <th scope="col" class="p-4">Created at</th>
+            <th scope="col" class="p-4">Updated at</th>
+        </tr>
+    </thead>
+
+    <tbody class="mx-2 my-2 dark:bg-gray-800">
+        <% @transactions.each do |transaction| %>
+            <tr class="text-sm font-normal text-gray-900 whitespace-nowrap dark:text-white">
+                <td class="p-4"><%= transaction.id %></td>
+                <td class="p-4"><%= transaction.symbol %></td>
+                <td class="p-4"><%= transaction.transaction_kind %></td>
+                <td class="p-4"><%= transaction.amount %></td>
+                <td class="p-4"><%= transaction.price %></td>
+                <td class="p-4"><%= transaction.price * transaction.amount %></td>
+                <td class="p-4"><%= transaction.created_at.strftime('%Y-%m-%d')%></td>
+                <td class="p-4"><%= transaction.updated_at.strftime('%Y-%m-%d')%></td>
+            <tr>
+        <% end %>
+    </tbody>
+</table>

@@ -16,7 +16,7 @@
                     <div class="flex gap-5 text-primary-700 px-5">    
                         <%if @user%>
                             <%if !@user.admin?%>
-                                <%= link_to "Transactions", transactions_path, class:"self-center text-m font-semibold whitespace-nowrap dark:text-white"%>
+                                <%= link_to "Transactions", show_transactions_path, class:"self-center text-m font-semibold whitespace-nowrap dark:text-white"%>
                                 <%= link_to "Portfolio", portfolio_path, class:"self-center text-m font-semibold whitespace-nowrap dark:text-white"%>
                                 <%= link_to "Wallet", wallet_path, class:"self-center text-m font-semibold whitespace-nowrap dark:text-white"%>    
                             <%end%>

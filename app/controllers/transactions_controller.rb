@@ -55,6 +55,9 @@ class TransactionsController < ApplicationController
         end
     end
     
+    def show
+      @transactions = Transaction.where(:user_id == @user.id)
+    end
     private
 
     def transaction_params
