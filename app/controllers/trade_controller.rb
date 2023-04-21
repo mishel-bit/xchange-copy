@@ -4,6 +4,7 @@ class TradeController < ApplicationController
     def index
         @chart_stock = get_chart_data
         @quote = IEX_CLIENT.quote(params[:symbol])
+        @company = IEX_CLIENT.company(params[:symbol])
     end
 
     def get_chart_data

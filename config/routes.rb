@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   post '/account' => 'user#account_edit'
   
   get '/portfolio' => 'portfolio#index', as: 'portfolio'
-  get '/transactions' => 'transactions#index', as: 'transactions'
+  get '/transactions/:id' => 'transactions#index', as: 'transactions'
   get '/trade/:symbol' => 'trade#index', as: 'trade'
   post '/trade/:symbol/buy' => 'transactions#buy', as: 'buy_transaction'
   post '/trade/:symbol/sell' => 'transactions#sell', as: 'sell_transaction'

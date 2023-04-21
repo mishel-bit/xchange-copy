@@ -1,15 +1,17 @@
 class TransactionsController < ApplicationController
     before_action :get_user
+    layout 'stacked'
 
     def index
-        @portfolio = @user.portfolios
+        @portfolio = Portfolio.find(params[:id])
         # @transaction = @portfolio.transactions
+        @transaction = Transaction.where(portfolio_id: params[:id])
     end
 
     def buy
       @portfolio = @user.portfolios.find_by_symbol(params[:symbol]) 
         if @portfolio.nil?
-          @portfolio = @user.portfolios.create(:symbol =>params[:symbol], :amount => 0) 
+          @portfolio = @user.portfolios.create(:symbol => params[:symbol], :amount => 0, :company_name  => portfolio_params[:company_name]) 
         else
           total_price = transaction_params[:amount].to_d * transaction_params[:price].to_d
           print "teal"
@@ -35,7 +37,7 @@ class TransactionsController < ApplicationController
     def sell
       @portfolio = @user.portfolios.find_by_symbol(params[:symbol]) 
         if @portfolio.nil?
-          @portfolio = @user.portfolios.create(:symbol => params[:symbol], :amount => 0) 
+          @portfolio = @user.portfolios.create(:symbol => params[:symbol], :amount => 0, :company_name  => portfolio_params[:company_name]) 
         else
           total_price = transaction_params[:amount].to_d * transaction_params[:price].to_d
           if @portfolio.amount < transaction_params[:amount].to_d 
@@ -59,7 +61,12 @@ class TransactionsController < ApplicationController
       params.permit(:symbol, :price, :amount, :transaction_kind)
     end
 
+    def portfolio_params
+      params.permit(:company_name)
+    end
+
     def get_user
       @user = User.find_by_email(cookies.encrypted[:user_id])
     end
+
 end

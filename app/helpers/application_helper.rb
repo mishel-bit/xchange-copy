@@ -7,6 +7,10 @@ module ApplicationHelper
         IEX_CLIENT.logo(symbol)
     end
 
+    def company(symbol)
+        IEX_CLIENT.company(symbol)
+    end
+
     def format_m(num)
         if !num.nil?
             (0.000001 * num).ceil(2)

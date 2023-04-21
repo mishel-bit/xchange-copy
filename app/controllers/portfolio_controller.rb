@@ -1,5 +1,6 @@
 class PortfolioController < ApplicationController
   before_action :get_user
+  layout 'stacked'
 
   def index
     @portfolio = @user.portfolios
