@@ -28,6 +28,9 @@ Rails.application.routes.draw do
   post '/trade/:symbol/buy' => 'transactions#buy', as: 'buy_transaction'
   post '/trade/:symbol/sell' => 'transactions#sell', as: 'sell_transaction'
 
+  get '/wallet' => 'wallet#index'
+  post '/wallet' => 'wallet#deposit', :as => 'deposit'
+
   namespace :admin do
     resources :users
   end
