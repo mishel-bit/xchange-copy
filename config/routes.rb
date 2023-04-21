@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :portfolios
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -28,12 +30,18 @@ Rails.application.routes.draw do
       resources :users
     end
 
+    resources :portfolios do
+      resources :transactions
+    end
+
+  #portfolio routes
   get '/portfolios' => 'portfolios#index'
   get '/portfolios/show' => 'portfolios#show', as: 'show_portfolio'
 
-  # resources :my_resources do
-  #   get '/:page', action: :index, controller: :home
-  # end
-  
-  get '/:page', action: :index, controller: :home
+  # transaction routes
+  get '/portfolios/:symbol/transactions' => 'transactions#index'
+  post '/portfolios/:symbol/transactions' => 'transactions#create', as: 'create_transaction'
+  get '/portfolios/:symbol/transactions/new' => 'transactions#new', as: 'new_transaction'
+  get '/portfolios/:symbol/transactions/:id' => 'transactions#show'
+  patch '/portfolios/:symbol/transactions/:id' => 'transactions#update'
 end

@@ -1,0 +1,31 @@
+<%= turbo_frame_tag "modal" do %>
+<%= form_with model: @portfolio, local: true do |form| %>
+    <p>
+        <% if @portfolio.errors.any? %>
+            <ul>
+                <% @portfolio.errors.full.messages.each do | message | %>
+                <li><%= message%></li>
+                <% end %>
+            </ul>
+        <% end %>
+    </p>
+
+    <div>
+        <% form.label :symbol, style: "display: block" %>
+        <%= form.hidden_field :symbol, value: $company.symbol %>
+    </div>
+    
+    <div>
+        <% form.label :company_name, style: "display: block" %>
+        <%= form.hidden_field :company_name, value: $company.company_name %>
+    </div>
+    
+    <div>
+        <% form.label :amount, style: "display: block" %>
+        <%= form.hidden_field :amount, value: 0 %>
+    </div>  
+    <div>
+        <%= form.submit "Add portfolio" %>
+    </div>
+<% end %>
+<% end %>
