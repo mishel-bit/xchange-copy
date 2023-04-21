@@ -1,5 +1,5 @@
 require 'faraday'
 require "ostruct"
 
-response = Faraday.get('https://api.iex.cloud/v1/data/CORE/REF_DATA?token=pk_06f0670b09884fe5aa66d394e4263f00')
+response = Faraday.get('https://api.iex.cloud/v1/data/CORE/REF_DATA?token='+Rails.application.credentials.dig(:iex, :publishable_token))
 IEX_CLOUD = JSON.parse(response.body, object_class: OpenStruct)

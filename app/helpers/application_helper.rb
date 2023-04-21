@@ -12,4 +12,16 @@ module ApplicationHelper
             (0.000001 * num).ceil(2)
         end
     end
+
+    def format_date(date)
+        if !date.nil?
+            date.strftime("%b %d, %Y %I:%M %p %Z")
+        end
+    end
+
+    def color(sign)
+        if !sign.nil?
+            sign === "+" ? 'text-emerald-600' : 'text-rose-600'
+        end
+    end
 end
