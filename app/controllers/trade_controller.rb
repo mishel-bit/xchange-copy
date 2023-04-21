@@ -1,4 +1,5 @@
 class TradeController < ApplicationController
+  before_action :get_user
     layout 'stacked'
 
     def index
@@ -16,5 +17,9 @@ class TradeController < ApplicationController
           res[k[0]] = k[1..-1]
         res
         end
+    end
+
+    def get_user
+      @user = User.find_by_email(cookies.encrypted[:user_id])
     end
 end
