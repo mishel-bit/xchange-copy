@@ -11,13 +11,7 @@ class HomeController < ApplicationController
    @stocks_array = Kaminari.paginate_array(@stocks_cloud, total_count:@stocks_cloud.count).page(params[:page]).per(10)
  end
 
-
- 
-
-
-
  private
-
 
 
  def get_user
@@ -25,6 +19,10 @@ class HomeController < ApplicationController
     
      if @user.admin?
         redirect_to admin_users_path
+     else
+        if @user.account_status ==="pending"
+          redirect_to account_path
+        end
      end
  end
 end
