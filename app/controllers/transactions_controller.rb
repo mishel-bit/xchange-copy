@@ -1,63 +1,62 @@
 class TransactionsController < ApplicationController
-    before_action :get_portfolio
-    before_action :get_transaction, only: [ :show, :edit, :update, :destroy ]
     before_action :get_user
+
     def index
-        @transaction = @portfolio.transactions
+        @portfolio = @user.portfolios
+        # @transaction = @portfolio.transactions
     end
 
-    def show
-    end
-
-    def new
-       @trans = params[:transaction]
-       @chart_stock = get_chart_data
-       @transaction = @portfolio.transactions.new
-       @logo = $client.logo(@portfolio.symbol)
-       @quote = $client.quote(@portfolio.symbol)
-       $company = $client.company(@portfolio.symbol)
-    end
-
-    def create
-        @transaction = @portfolio.transactions.new(transaction_params)
-        if @transaction.save
-          
-          redirect_to portfolio_transactions_path, notice: 'New transaction has been completed!'
+    def buy
+      @portfolio = @user.portfolios.find_by_symbol(params[:symbol]) 
+        if @portfolio.nil?
+          @portfolio = @user.portfolios.create(:symbol =>params[:symbol], :amount => 0) 
         else
-          render :new, notice: :unproccessable_entity
+          total_price = transaction_params[:amount].to_d * transaction_params[:price].to_d
+          print "teal"
+          print transaction_params[:price]
+          print @user.balance
+          print total_price
+          print @user
+          if @user.balance < total_price
+            redirect_to trade_path(params[:symbol]), notice: "Transaction failed. You don't have enough balance"
+          else
+            @user.update!(:balance => @user.balance - total_price)
+            @portfolio.update!(:amount => @portfolio.amount + transaction_params[:amount].to_d)
+            @transaction = @portfolio.transactions.new(transaction_params)
+            if @transaction.save
+              redirect_to trade_path(params[:symbol]), notice: "Transaction Successful"
+            else
+              redirect_to trade_path(params[:symbol]), notice: "Transaction Failed"
+            end
+          end
         end
     end
-
-    def edit
+    
+    def sell
+      @portfolio = @user.portfolios.find_by_symbol(params[:symbol]) 
+        if @portfolio.nil?
+          @portfolio = @user.portfolios.create(:symbol => params[:symbol], :amount => 0) 
+        else
+          total_price = transaction_params[:amount].to_d * transaction_params[:price].to_d
+          if @portfolio.amount < transaction_params[:amount].to_d 
+            redirect_to trade_path(params[:symbol]), notice: "Transaction failed. You don't have enough shares"
+          else
+            @user.update!(:balance => @user.balance + total_price)
+            @portfolio.update!(:amount => @portfolio.amount - transaction_params[:amount].to_d)
+            @transaction = @portfolio.transactions.new(transaction_params)
+            if @transaction.save
+              redirect_to trade_path(params[:symbol]), notice: "Transaction Successful"
+            else
+              redirect_to trade_path(params[:symbol]), notice: "Transaction Failed"
+            end
+          end
+        end
     end
-
-    def update
-    end
-
+    
     private
 
-    
-    def get_portfolio   
-        @portfolio = Portfolio.find(params[:portfolio_id])
-    end
-
-    def get_transaction
-        @transaction = Transaction.find(params[:id])
-    end
-
     def transaction_params
-        params.fetch(:transaction, {}).permit(:symbol, :price, :amount, :transaction_kind, :portfolio_id)
-    end
-
-    def get_chart_data
-        @chart = $client.chart(@portfolio.symbol)
-    
-        chart_arr = @chart.reduce([]) { |init, curr|
-          init.push([curr['label'], curr['open'], curr['close'], curr['high'], curr['low']]);
-        }.inject({}) do |res, k|
-          res[k[0]] = k[1..-1]
-        res
-        end
+      params.permit(:symbol, :price, :amount, :transaction_kind)
     end
 
     def get_user

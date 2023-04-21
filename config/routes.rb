@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
-  resources :portfolios
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
+  
   root "home#index"
 
   
@@ -26,22 +22,14 @@ Rails.application.routes.draw do
   get '/account' => 'user#account_show'
   post '/account' => 'user#account_edit'
   
-    namespace :admin do
-      resources :users
-    end
+  get '/portfolio' => 'portfolio#index', as: 'portfolio'
+  get '/transactions' => 'transactions#index', as: 'transactions'
+  get '/trade/:symbol' => 'trade#index', as: 'trade'
+  post '/trade/:symbol/buy' => 'transactions#buy', as: 'buy_transaction'
+  post '/trade/:symbol/sell' => 'transactions#sell', as: 'sell_transaction'
 
-    resources :portfolios do
-      resources :transactions
-    end
+  namespace :admin do
+    resources :users
+  end
 
-  #portfolio routes
-  get '/portfolios' => 'portfolios#index'
-  get '/portfolios/show' => 'portfolios#show', as: 'show_portfolio'
-
-  # transaction routes
-  get '/portfolios/:symbol/transactions' => 'transactions#index'
-  post '/portfolios/:symbol/transactions' => 'transactions#create', as: 'create_transaction'
-  get '/portfolios/:symbol/transactions/new' => 'transactions#new', as: 'new_transaction'
-  get '/portfolios/:symbol/transactions/:id' => 'transactions#show'
-  patch '/portfolios/:symbol/transactions/:id' => 'transactions#update'
 end

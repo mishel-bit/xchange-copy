@@ -1,0 +1,26 @@
+
+<%= form_with model: @transaction, url:path, local: true do |f| %>
+    <div id="main-trade" class="min-h-435">
+        <div class="flex flex-col overflow-hidden items-center justify-center dark:bg-gray-900">
+            <div class="w-full max-w-xl space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
+                 <h4 class="mb-2 text-xl  tracking-tight text-primary-700 md:text-4xl lg:text-2xl dark:text-white">
+                    <%= type === "buy" ? 'Buy' : 'Sell'%>  <%= params[:symbol].upcase %> Shares
+                 </h4>
+                <%= f.hidden_field :symbol, value: params[:symbol] %>
+                <%= f.hidden_field :transaction_kind, value: 'buy' %>
+                <%= f.hidden_field :price, value: @quote.latest_price %>
+                <div>
+                    <%= f.label :Price,  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
+                    <%= f.text_field :preview_price, value: @quote.latest_price, disabled: true, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-700 focus:border-primary-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-700 dark:focus:border-primary-700" %>
+                </div>
+
+                <div>
+                    <%= f.label :Amount,  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
+                    <%= f.text_field :amount,  class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-700 focus:border-primary-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-700 dark:focus:border-primary-700" %>
+                </div> 
+                 <%=f.submit type === "buy" ? 'Buy' : 'Sell', class: "w-full mt-5 px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-700 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"%>
+            </div>   
+        </div>
+    </div>
+<% end %>
+
