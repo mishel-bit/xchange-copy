@@ -76,7 +76,7 @@ class PortfoliosController < ApplicationController
   end
 
   def get_chart_data
-    @chart = $client.chart(params[:stock_symbol])
+    @chart = IEX_CLIENT.chart(params[:stock_symbol])
 
     chart_arr = @chart.reduce([]) { |init, curr|
       init.push([curr['label'], curr['open'], curr['close'], curr['high'], curr['low']]);

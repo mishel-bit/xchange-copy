@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
  protect_from_forgery with: :null_session
 
- before_action :authenticate_user  #:initialize_iex_client, :initialize_iex_cloud, :initialize_quote
+ before_action :authenticate_user
 
  def root
  end 
@@ -20,5 +20,4 @@ class ApplicationController < ActionController::Base
          redirect_to sign_in_path
      end
  end
-
 end
