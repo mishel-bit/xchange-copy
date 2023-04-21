@@ -1,0 +1,33 @@
+<table class="min-w-full bg-white divide-y divide-gray-200 dark:divide-gray-600">
+    <thead class="bg-gray-100 dark:bg-gray-700">
+        <tr class="text-xs text-gray-900 font-medium tracking-wider text-gray-500 uppercase dark:text-white">
+            <th scope="col" class="p-4">Name</th>
+            <th scope="col" class="p-4">Company</th>
+            <th scope="col" class="p-4 text-right">Latest Price</th>
+            <th scope="col" class="p-4 text-right">Change</th>
+            <th scope="col" class="p-4 text-right">AVG Volume</th>
+            <th scope="col" class="p-4 text-right">Market Cap</th>
+            <th scope="col" class="p-4 text-center">Buy/Sell</th>
+        </tr>
+    </thead>
+
+    <tbody class="mx-2 my-2 dark:bg-gray-800">
+        <%  @stocks_array.each do | stock | %>
+            <tr class="text-sm font-normal text-gray-900 whitespace-nowrap dark:text-white">
+                <td class="p-4 flex justify-baseline items-center align-center gap-2">
+                    <%= image_tag logo(stock.symbol).url, class:"w-10 h-10" %>
+                    <span class="font-bold text-m"><%= stock.symbol %></span>
+                </td>
+                <% quote = quotes(stock.symbol) %>
+                <td title="<%= quote.company_name%>" class="cursor-pointer p-4 text-left"><%= quote.company_name.first(25) %>...</td>
+                <td class="p-4 text-right">$<%= quote.latest_price %></td>
+                <td class="p-4 text-right <%= color(quote.change_percent_s.first) %>"><%= quote.change_percent_s%></td>
+                <td class="p-4 text-right">$<%= format_m(quote.avg_total_volume)%>M</td>
+                <td class="p-4 text-right">$<%= format_m(quote.market_cap)%>M</td>
+                <td class="text-center">
+                    <%= link_to 'Trade', show_portfolio_path(:stock_symbol => stock.symbol), class: "text-primary-700 text-sm font-medium"%> 
+                </td>
+            <tr>
+        <% end %>
+    </tbody>
+</table>

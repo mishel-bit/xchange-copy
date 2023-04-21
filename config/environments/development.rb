@@ -52,7 +52,7 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  address:              'smtp.zoho.com',
+  address:              Rails.application.credentials.dig(:zoho, :domain),
   port:                 587,
   domain:               'http://localhost:3000/',
   user_name:            Rails.application.credentials.dig(:zoho, :user_name),

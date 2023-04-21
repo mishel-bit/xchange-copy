@@ -26,7 +26,7 @@ gem "stimulus-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
-
+gem 'iex-ruby-client'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -72,7 +72,9 @@ group :test do
 end
 
 gem "tailwindcss-rails", "~> 2.0"
-
 gem 'sendgrid-ruby'
-
+gem 'faraday'
 gem 'mail'
+gem "rails_charts"
+gem "stock_quote", '~> 3.0.0'
+gem 'kaminari'

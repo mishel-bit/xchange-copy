@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
   root "home#index"
+
   
   get '/sign_in' => 'session#sign_in'
   post '/sign_in' => 'session#new_session'
@@ -25,4 +28,12 @@ Rails.application.routes.draw do
       resources :users
     end
 
+  get '/portfolios' => 'portfolios#index'
+  get '/portfolios/show' => 'portfolios#show', as: 'show_portfolio'
+
+  # resources :my_resources do
+  #   get '/:page', action: :index, controller: :home
+  # end
+  
+  get '/:page', action: :index, controller: :home
 end
