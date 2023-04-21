@@ -1,4 +1,42 @@
-<% content_for :main_content do %>
-    <h1>Porfolio</h1>
-<% end %>
+<div class="mt-4 mb-4 lg:mb-0">
+    <h3 class="p-2 text-2xl text-gray-800 dark:text-secondary-500">
+        My Portfolio
+    <h3>
+</div>
+<table class="min-w-full bg-white divide-y divide-gray-200 dark:divide-gray-600">
+    <thead class="bg-gray-100 dark:bg-gray-700">
+        <tr class="text-xs text-gray-900 font-medium tracking-wider text-gray-500 uppercase dark:text-white">
+            <th scope="col" class="p-4">Name</th>
+            <th scope="col" class="p-4">Company</th>
+            <th scope="col" class="p-4 text-right">Latest Price</th>
+            <th scope="col" class="p-4 text-right">Change</th>
+            <th scope="col" class="p-4 text-right">AVG Volume</th>
+            <th scope="col" class="p-4 text-right">Market Cap</th>
+            <th scope="col" class="p-4 text-right">Amount</th>
+            <th scope="col" class="p-4 text-right">Total Price</th>
+            <th scope="col" class="p-4 text-center"></th>
+        </tr>
+    </thead>
+
+    <tbody class="mx-2 my-2 dark:bg-gray-800">
+        <%  @portfolio.each do | port | %>
+            <tr class="text-sm font-normal text-gray-900 whitespace-nowrap dark:text-white">
+                <td class="p-4 flex justify-baseline items-center align-center gap-2">
+                    <%= image_tag logo(port.symbol).url, class:"w-10 h-10" %>
+                    <span class="font-bold text-m"><%= port.symbol %></span>
+                </td>
+                <% quote = quotes(port.symbol) %>
+                <% company = company(port.symbol) %>
+                <td class="cursor-pointer p-4 text-left"><%= company.company_name %></td>
+                <td class="p-4 text-right">$<%= quote.latest_price %></td>
+                <td class="p-4 text-right <%  if quote.change_percent_s %><%=color(quote.change_percent_s.first)%><% end%>"><%= quote.change_percent_s%></td>
+                <td class="p-4 text-right">$<%= format_m(quote.avg_total_volume)%>M</td>
+                <td class="p-4 text-right">$<%= format_m(quote.market_cap)%>M</td>
+                <td class="p-4 text-right"><%= port.amount %></td>
+                <td class="p-4 text-right">$<%= port.amount * quote.latest_price %></td>
+                <td class="text-center"><%= link_to 'View Transaction', transactions_path(port.id), class: "text-primary-700 text-sm font-medium"%> | <%= link_to 'Trade', trade_path(port.symbol), class: "text-primary-700 text-sm font-medium"%></td>
+            <tr>
+        <% end %>
+    </tbody>
+</table>
 

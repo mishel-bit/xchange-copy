@@ -19,7 +19,8 @@
                     <span class="font-bold text-m"><%= stock.symbol %></span>
                 </td>
                 <% quote = quotes(stock.symbol) %>
-                <td title="<%= quote.company_name%>" class="cursor-pointer p-4 text-left"><%= quote.company_name.first(25) %>...</td>
+                <% company = company(stock.symbol) %>
+                <td title="<%= company.company_name %>" class="cursor-pointer p-4 text-left"><%= company.company_name %></td>
                 <td class="p-4 text-right">$<%= quote.latest_price %></td>
                 <td class="p-4 text-right <%  if quote.change_percent_s %><%=color(quote.change_percent_s.first)%><% end%>"><%= quote.change_percent_s%></td>
                 <td class="p-4 text-right">$<%= format_m(quote.avg_total_volume)%>M</td>

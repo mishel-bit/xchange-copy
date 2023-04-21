@@ -6,8 +6,9 @@
                  <h4 class="mb-2 text-xl  tracking-tight text-primary-700 md:text-4xl lg:text-2xl dark:text-white">
                     <%= type === "buy" ? 'Buy' : 'Sell'%>  <%= params[:symbol].upcase %> Shares
                  </h4>
-                <%= f.hidden_field :symbol, value: params[:symbol] %>
-                <%= f.hidden_field :transaction_kind, value: 'buy' %>
+                <%= f.hidden_field :company_name, value: @company.company_name %>
+                <%= f.hidden_field :symbol, value: @company.symbol %>
+                <%= f.hidden_field :transaction_kind, value: type === "buy" ? 'Buy' : 'Sell' %>
                 <%= f.hidden_field :price, value: @quote.latest_price %>
                 <div>
                     <%= f.label :Price,  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
