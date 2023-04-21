@@ -12,4 +12,6 @@ module ApplicationHelper
             (0.000001 * num).ceil(2)
         end
     end
+
+
 end

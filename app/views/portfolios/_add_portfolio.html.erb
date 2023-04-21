@@ -1,4 +1,6 @@
 <%= turbo_frame_tag "modal" do %>
+<% quote = quotes(params[:stock_symbol]) %>
+<% company = company(params[:stock_symbol])%>
 <%= form_with model: @portfolio, local: true do |form| %>
     <p>
         <% if @portfolio.errors.any? %>
@@ -12,12 +14,12 @@
 
     <div>
         <% form.label :symbol, style: "display: block" %>
-        <%= form.hidden_field :symbol, value: $company.symbol %>
+        <%= form.hidden_field :symbol, value: company.symbol %>
     </div>
     
     <div>
         <% form.label :company_name, style: "display: block" %>
-        <%= form.hidden_field :company_name, value: $company.company_name %>
+        <%= form.hidden_field :company_name, value: company.company_name %>
     </div>
     
     <div>
@@ -25,7 +27,7 @@
         <%= form.hidden_field :amount, value: 0 %>
     </div>  
     <div>
-        <%= form.submit "Add portfolio" %>
+        <%= form.submit "Add portfolio", data: { controller: "vis", action: "vis#visible" } %>
     </div>
 <% end %>
 <% end %>

@@ -8,36 +8,15 @@ class PortfoliosController < ApplicationController
 
   def show
     @chart_stock = get_chart_data
-    @logo = $client.logo(params[:stock_symbol])
-    $company = $client.company(params[:stock_symbol])
-    $curr_price = $client.quote('TSLA')
     @portfolio = Portfolio.new
-
     #for refactor 
     if params[:stock_symbol]
       @setportfolio = Portfolio.find_by(symbol: params[:stock_symbol])
     end
-
-
   end
 
   def new
     @portfolio = @user.portfolios.new
-  end
-
-  def addnew
-    @portfolio = @user.portolios.new(portfolio_params)
-    respond_to do |format|
-      if @portfolio.save
-          format.turbo_stream do
-             render turbo_stream: [
-              turbo_stream.update("frame1", partial: "add_portfolio")
-             ] 
-          end
-      else
-          render :new, status: :unprocessable_entity
-      end
-    end
   end
 
   def edit
@@ -50,7 +29,6 @@ class PortfoliosController < ApplicationController
       if @portfolio.save
           format.turbo_stream do
              render turbo_stream: [
-             # turbo_stream.update("sidepanel", partial: "sidepanel" ,locals: {symbol: @portfolios}),
               turbo_stream.update("modal", "")
              ] 
           end
@@ -75,21 +53,21 @@ class PortfoliosController < ApplicationController
     params.require(:portfolio).permit(:symbol, :company_name, :amount)
   end
 
-  def get_chart_data
-    @chart = $client.chart(params[:stock_symbol])
 
-    chart_arr = @chart.reduce([]) { |init, curr|
+
+  def get_user
+    @user = User.find_by_email(cookies.encrypted[:user_id])
+  end
+
+  def get_chart_data
+    chart = IEX_CLIENT.chart(params[:stock_symbol])
+
+    chart_arr = chart.reduce([]) { |init, curr|
       init.push([curr['label'], curr['open'], curr['close'], curr['high'], curr['low']]);
     }.inject({}) do |res, k|
       res[k[0]] = k[1..-1]
     res
     end
   end
-
-  def get_user
-    @user = User.find_by_email(cookies.encrypted[:user_id])
-  end
-
-
 
 end

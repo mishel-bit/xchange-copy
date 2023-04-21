@@ -11,13 +11,15 @@
     <% end %>
 
     <div>
-      <h1><%= $company.company_name%></h1>
-      <h1>(<%= $company.symbol %>)</h1>
-      <%= image_tag @logo.url %>
-      <%= @curr_price.inspect %>
+     <% quote = quotes(params[:stock_symbol]) %>
+     <% company = company(params[:stock_symbol])%>
+      <span class="font-bold text-m"><%= company.company_name %></span>
+      <h1 class="font-bold text-m"><%= company.symbol %></h1>
+      <%= image_tag logo(params[:stock_symbol]).url, class:"w-10 h-10" %>
+      <span class="font-bold text-m">$<%= quote.latest_price %></span>
     </div>
 
-
+    <div class="w-1/2">
     <%= candlestick_chart @chart_stock,
       class: 'box',
       theme: 'sakura',
@@ -60,17 +62,28 @@
             end: 100
           }
         ],
+        grid: [
+          {
+            left: 30,
+            right: 30,
+          },
+        ],
       }
     %>
-    
-  <% if @setportfolio %>
-      <%= link_to "Buy", new_portfolio_transaction_path(portfolio_id: @setportfolio.id, :transaction => "buy") %>
-      <%= link_to "Sell",new_portfolio_transaction_path(portfolio_id: @setportfolio.id, :transaction => "sell") %>
-  <% else %>
-    <h1>Add to portfolio to buy/sell this stock.</h1>
-      <%= link_to "Buy" %>
-      <%= link_to "Sell" %>
-  <% end %>
+    </div>
+
+  <div id="container">
+    <% if @setportfolio %>
+        <%= link_to "Buy", new_portfolio_transaction_path(portfolio_id: @setportfolio.id, :transaction => "buy") %>
+        <%= link_to "Sell",new_portfolio_transaction_path(portfolio_id: @setportfolio.id, :transaction => "sell") %>
+    <% else %>
+    <div id="disablebtn" class="hidden">
+      <h1>Add to portfolio to buy/sell this stock.</h1>
+        <%= link_to "Buy" %>
+        <%= link_to "Sell" %>
+    </div>
+    <% end %>
+  </div>
 
 <% end %>
 

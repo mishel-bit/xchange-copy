@@ -12,10 +12,7 @@ class TransactionsController < ApplicationController
     def new
        @trans = params[:transaction]
        @chart_stock = get_chart_data
-       @transaction = @portfolio.transactions.new
-       @logo = $client.logo(@portfolio.symbol)
-       @quote = $client.quote(@portfolio.symbol)
-       $company = $client.company(@portfolio.symbol)
+       $company = client.company(@portfolio.symbol)
     end
 
     def create
@@ -50,7 +47,7 @@ class TransactionsController < ApplicationController
     end
 
     def get_chart_data
-        @chart = $client.chart(@portfolio.symbol)
+        @chart = IEX_CLIENT.chart(@portfolio.symbol)
     
         chart_arr = @chart.reduce([]) { |init, curr|
           init.push([curr['label'], curr['open'], curr['close'], curr['high'], curr['low']]);
