@@ -8,7 +8,6 @@ class WalletController < ApplicationController
 
     def deposit
         @balance = @user.balance
-        print "orange"
         print money_params[:money]
         @user.update!(:balance => @user.balance + money_params[:money].to_d)
         @balance = @user.balance

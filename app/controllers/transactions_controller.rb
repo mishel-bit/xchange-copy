@@ -3,61 +3,53 @@ class TransactionsController < ApplicationController
     layout 'stacked'
 
     def index
-        @portfolio = Portfolio.find(params[:id])
-        # @transaction = @portfolio.transactions
-        @transaction = Transaction.where(portfolio_id: params[:id])
+        if params[:id].blank?
+          @portfolio = @user.portfolios
+          @transactions = Transaction.where(portfolio_id: @user.portfolio_ids)
+        else
+          @transactions = Transaction.where(portfolio_id: params[:id])
+        end
     end
+    
+    def create
+      @portfolio = @user.portfolios.find_by_symbol(params[:symbol]) 
+      if @portfolio.nil?
+        @portfolio = @user.portfolios.create(symbol: params[:symbol], amount: 0, company_name: portfolio_params[:company_name]) 
+      end
 
-    def buy
-      @portfolio = @user.portfolios.find_by_symbol(params[:symbol]) 
-        if @portfolio.nil?
-          @portfolio = @user.portfolios.create(:symbol => params[:symbol], :amount => 0, :company_name  => portfolio_params[:company_name]) 
+      total_price = transaction_params[:amount].to_d * transaction_params[:price].to_d
+      category = params[:category]
+
+      if category === "buy"
+        if @user.balance < total_price
+          redirect_to trade_path(params[:symbol]), notice: "Purchase failed. You don't have enough balance"
         else
-          total_price = transaction_params[:amount].to_d * transaction_params[:price].to_d
-          print "teal"
-          print transaction_params[:price]
-          print @user.balance
-          print total_price
-          print @user
-          if @user.balance < total_price
-            redirect_to trade_path(params[:symbol]), notice: "Transaction failed. You don't have enough balance"
+          @user.update!(:balance => @user.balance - total_price)
+          @portfolio.update!(:amount => @portfolio.amount + transaction_params[:amount].to_d)
+          @transaction = @portfolio.transactions.new(transaction_params)
+          if @transaction.save
+            redirect_to trade_path(params[:symbol]), notice: "Successfully bought #{transaction_params[:amount].to_d } shares"
           else
-            @user.update!(:balance => @user.balance - total_price)
-            @portfolio.update!(:amount => @portfolio.amount + transaction_params[:amount].to_d)
-            @transaction = @portfolio.transactions.new(transaction_params)
-            if @transaction.save
-              redirect_to trade_path(params[:symbol]), notice: "Transaction Successful"
-            else
-              redirect_to trade_path(params[:symbol]), notice: "Transaction Failed"
-            end
+            redirect_to trade_path(params[:symbol]), notice: "Purchase Failed"
+          end
+        end  
+      #sell stocks
+      else
+        if @portfolio.amount < transaction_params[:amount].to_d 
+          redirect_to trade_path(params[:symbol]), notice: "Sell failed. You don't have enough shares"
+        else
+          @user.update!(:balance => @user.balance + total_price)
+          @portfolio.update!(:amount => @portfolio.amount - transaction_params[:amount].to_d)
+          @transaction = @portfolio.transactions.new(transaction_params)
+          if @transaction.save
+            redirect_to trade_path(params[:symbol]), notice: "Successfully sold #{transaction_params[:amount].to_d } shares"
+          else
+            redirect_to trade_path(params[:symbol]), notice: "Sell Failed"
           end
         end
+      end
     end
     
-    def sell
-      @portfolio = @user.portfolios.find_by_symbol(params[:symbol]) 
-        if @portfolio.nil?
-          @portfolio = @user.portfolios.create(:symbol => params[:symbol], :amount => 0, :company_name  => portfolio_params[:company_name]) 
-        else
-          total_price = transaction_params[:amount].to_d * transaction_params[:price].to_d
-          if @portfolio.amount < transaction_params[:amount].to_d 
-            redirect_to trade_path(params[:symbol]), notice: "Transaction failed. You don't have enough shares"
-          else
-            @user.update!(:balance => @user.balance + total_price)
-            @portfolio.update!(:amount => @portfolio.amount - transaction_params[:amount].to_d)
-            @transaction = @portfolio.transactions.new(transaction_params)
-            if @transaction.save
-              redirect_to trade_path(params[:symbol]), notice: "Transaction Successful"
-            else
-              redirect_to trade_path(params[:symbol]), notice: "Transaction Failed"
-            end
-          end
-        end
-    end
-    
-    def show
-      @transactions = Transaction.where(:user_id == @user.id)
-    end
     private
 
     def transaction_params
