@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   
   root "home#index"
-
   
   get '/sign_in' => 'session#sign_in'
   post '/sign_in' => 'session#new_session'
@@ -22,22 +21,20 @@ Rails.application.routes.draw do
   get '/account' => 'user#account_show'
   post '/account' => 'user#account_edit'
   
-  get '/portfolio' => 'portfolio#index', as: 'portfolio'
-  get '/transactions/:id' => 'transactions#index', as: 'transactions'
-  get '/transactions' => 'transactions#show', as: 'show_transactions'
+  get '/portfolio' => 'portfolio#index'
+
+  get '/transactions' => 'transactions#index'
+  post '/transactions' => 'transactions#create'
+
   get '/trade/:symbol' => 'trade#index', as: 'trade'
-  post '/trade/:symbol/buy' => 'transactions#buy', as: 'buy_transaction'
-  post '/trade/:symbol/sell' => 'transactions#sell', as: 'sell_transaction'
 
   get '/wallet' => 'wallet#index'
   post '/wallet' => 'wallet#deposit', :as => 'deposit'
 
   namespace :admin do
+    get '/transactions' => 'transactions#index'
     resources :users
   end
 
-  namespace :admin do
-    get '/transactions' => 'transactions#index'
-  end
 
 end
