@@ -78,3 +78,4 @@ gem 'mail'
 gem "rails_charts"
 gem "stock_quote", '~> 3.0.0'
 gem 'kaminari'
+gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
