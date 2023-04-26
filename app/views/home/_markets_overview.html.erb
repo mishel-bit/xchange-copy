@@ -10,7 +10,7 @@
                 <h3>MOST ACTIVE BY LATEST VOLUME</h3>
             </div>
             <div class="px-2 py-1 text-gray-400">
-                <%= render "active_table"%>
+                <%= render "markets_table", stocks: @stocks_active%>
             </div> 
         </div>
         <div class="">
@@ -18,7 +18,7 @@
                 <h3>GAINERS</h3>
             </div>
             <div class="px-2 py-1 text-gray-400">
-                <%= render "gainers_table"%>
+                <%= render "markets_table", stocks: @stocks_gainers%>
             </div> 
         </div>
         <div class="">
@@ -26,7 +26,7 @@
                 <h3>DECLINERS</h3>
             </div>
             <div class="px-2 py-1 text-gray-400">
-                <%= render "decliners_table"%>
+                <%= render "markets_table", stocks: @stocks_decliners%>
             </div> 
         </div>
     </div>
