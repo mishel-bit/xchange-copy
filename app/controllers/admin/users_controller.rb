@@ -1,6 +1,6 @@
 module Admin
   class UsersController < ApplicationController
-    before_action :get_user
+    before_action :restrict_users, :restrict_user
 
     def index
       @users = User.all
@@ -48,17 +48,6 @@ module Admin
 
     def user_params
       params.require(:user).permit(:email,:password,:account_status)
-    end
-
-    private
-    
-    def get_user
-        @user = User.find_by_email(cookies.encrypted[:user_id])
-        print @user.inspect
-       
-        if !@user.admin?
-           redirect_to root_path
-        end
     end
   end
 end
