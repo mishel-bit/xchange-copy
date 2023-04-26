@@ -1,5 +1,5 @@
 class TransactionsController < ApplicationController
-    before_action :get_user
+    before_action :restrict_users, :restrict_admin
     layout 'stacked'
 
     def index
@@ -59,9 +59,4 @@ class TransactionsController < ApplicationController
     def portfolio_params
       params.permit(:company_name)
     end
-
-    def get_user
-      @user = User.find_by_email(cookies.encrypted[:user_id])
-    end
-
 end

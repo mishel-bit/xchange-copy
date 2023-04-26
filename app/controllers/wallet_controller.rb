@@ -1,5 +1,5 @@
 class WalletController < ApplicationController
-    before_action :get_user
+    before_action :restrict_users, :restrict_admin
     layout 'stacked'
 
     def index
@@ -16,10 +16,6 @@ class WalletController < ApplicationController
     
     private
     
-    def get_user
-        @user = User.find_by_email(cookies.encrypted[:user_id])
-    end
-
     def money_params
         params.permit(:money)
     end
