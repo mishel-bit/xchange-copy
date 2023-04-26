@@ -1,29 +1,18 @@
-<div class="mt-4 mb-4 lg:mb-0">
-    <h3 class="p-2 text-2xl text-gray-800 dark:text-secondary-500">
-        Transactions
-    <h3>
+<div class="p-4">
+    <div class="mb-4 lg:mb-0">
+        <div class="flex justify-between gap-5">
+            <h3 class="text-2xl text-gray-900 dark:text-secondary-500">
+                <%= link_to 'Transactions', transactions_path%>
+            <h3>
+        </div>
+    </div>
+    <div class="flex flex-col mt-8">
+        <div class="overflow-x-auto rounded-lg">
+            <div class="inline-block min-w-full align-middle">
+                <div class="overflow-hidden shadow sm:rounded-lg">
+                    <%= render "shared/transaction_table"%>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<table class="min-w-full bg-white divide-y divide-gray-200 dark:divide-gray-600">
-    <thead class="bg-gray-100 dark:bg-gray-700">
-        <tr class="text-xs text-gray-900 font-medium tracking-wider text-gray-500 uppercase dark:text-white">
-            <th scope="col" class="p-4 text-right">Type</th>
-            <th scope="col" class="p-4 text-right">Stock</th>
-            <th scope="col" class="p-4 text-right">Price</th>
-            <th scope="col" class="p-4 text-right">Amount</th>
-            <th scope="col" class="p-4 text-right">Date</th>
-            <th scope="col" class="p-4 text-right">Total Price</th>
-        </tr>
-    </thead>
-
-    <tbody class="mx-2 my-2 dark:bg-gray-800">
-        <%  @transactions.each do | transaction | %>
-            <tr class="text-sm font-normal text-gray-900 whitespace-nowrap dark:text-white">
-                <td class="p-4 text-right"><%= transaction.transaction_kind%></td>
-                <td class="p-4 text-right"><%= symbol(transaction.portfolio_id)%></td>
-                <td class="p-4 text-right">$<%= transaction.price%></td>
-                <td class="p-4 text-right"><%= transaction.amount%></td>
-                <td class="p-4 text-right"><%= transaction.created_at.strftime("%B %d, %Y  %I:%M %p") %></td>
-                <td class="p-4 text-right">$<%= transaction.amount * transaction.price %></td>
-        <% end %>
-    </tbody>
-</table>
