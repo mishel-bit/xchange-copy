@@ -1,5 +1,5 @@
 module TransactionHelper
-    def symbol(portfolio_id)
-        Portfolio.find(portfolio_id).symbol
+    def symbol(stock_id)
+        Stock.find(stock_id).symbol
     end
 end

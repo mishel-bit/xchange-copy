@@ -4,17 +4,16 @@ class TransactionsController < ApplicationController
 
     def index
         if params[:id].blank?
-          @portfolio = @user.portfolios
-          @transactions = Transaction.where(portfolio_id: @user.portfolio_ids)
+          @transactions = Transaction.where(stock_id: @user.stock_ids)
         else
-          @transactions = Transaction.where(portfolio_id: params[:id])
+          @transactions = Transaction.where(stock_id: params[:id])
         end
     end
     
     def create
-      @portfolio = @user.portfolios.find_by_symbol(params[:symbol]) 
-      if @portfolio.nil?
-        @portfolio = @user.portfolios.create(symbol: params[:symbol], amount: 0, company_name: portfolio_params[:company_name]) 
+      @user_stock = @user.stocks.find_by_symbol(params[:symbol]) 
+      if @user_stocks.nil?
+        @user_stock = @user.stocks.create(symbol: params[:symbol], amount: 0, company_name: stock_params[:company_name]) 
       end
 
       total_price = transaction_params[:amount].to_d * transaction_params[:price].to_d
@@ -25,8 +24,8 @@ class TransactionsController < ApplicationController
           redirect_to trade_path(params[:symbol]), notice: "Purchase failed. You don't have enough balance"
         else
           @user.update!(:balance => @user.balance - total_price)
-          @portfolio.update!(:amount => @portfolio.amount + transaction_params[:amount].to_d)
-          @transaction = @portfolio.transactions.new(transaction_params)
+          @user_stock.update!(:amount => @user_stock.amount + transaction_params[:amount].to_d)
+          @transaction = @user_stock.transactions.new(transaction_params)
           if @transaction.save
             redirect_to trade_path(params[:symbol]), notice: "Successfully bought #{transaction_params[:amount].to_d } shares"
           else
@@ -35,12 +34,12 @@ class TransactionsController < ApplicationController
         end  
       #sell stocks
       else
-        if @portfolio.amount < transaction_params[:amount].to_d 
+        if @user_stock.amount < transaction_params[:amount].to_d 
           redirect_to trade_path(params[:symbol]), notice: "Sell failed. You don't have enough shares"
         else
           @user.update!(:balance => @user.balance + total_price)
-          @portfolio.update!(:amount => @portfolio.amount - transaction_params[:amount].to_d)
-          @transaction = @portfolio.transactions.new(transaction_params)
+          @user_stock.update!(:amount => @user_stock.amount - transaction_params[:amount].to_d)
+          @transaction = @user_stock.transactions.new(transaction_params)
           if @transaction.save
             redirect_to trade_path(params[:symbol]), notice: "Successfully sold #{transaction_params[:amount].to_d } shares"
           else
@@ -56,7 +55,7 @@ class TransactionsController < ApplicationController
       params.permit(:symbol, :price, :amount, :transaction_kind)
     end
 
-    def portfolio_params
+    def stock_params
       params.permit(:company_name)
     end
 end
