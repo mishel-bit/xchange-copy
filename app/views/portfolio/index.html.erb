@@ -20,22 +20,22 @@
     </thead>
 
     <tbody class="mx-2 my-2 dark:bg-gray-800">
-        <%  @portfolios.each do | portfolio | %>
+        <%  @user_stocks.each do | stock | %>
             <tr class="text-sm font-normal text-gray-900 whitespace-nowrap dark:text-white">
                 <td class="p-4 flex justify-baseline items-center align-center gap-2">
                    
-                    <span class="font-bold text-m"><%= portfolio.symbol %></span>
+                    <span class="font-bold text-m"><%= stock.symbol %></span>
                 </td>
-                <% quote = quotes(portfolio.symbol) %>
-                <% company = company(portfolio.symbol) %>
+                <% quote = quotes(stock.symbol) %>
+                <% company = company(stock.symbol) %>
                 <td class="cursor-pointer p-4 text-left"><%= company.company_name %></td>
-                <td class="p-4 text-right"><%= portfolio.amount %></td>
-                <td class="p-4 text-right">$<%= portfolio.amount * quote.latest_price %></td>
+                <td class="p-4 text-right"><%= stock.amount %></td>
+                <td class="p-4 text-right">$<%= stock.amount * quote.latest_price %></td>
                 <td class="p-4 text-right">$<%= quote.latest_price %></td>
                 <td class="p-4 text-right <%  if quote.change_percent_s %><%=color(quote.change_percent_s.first)%><% end%>"><%= quote.change_percent_s%></td>
                 <td class="p-4 text-right">$<%= format_m(quote.avg_total_volume)%>M</td>
                 <td class="p-4 text-right">$<%= format_m(quote.market_cap)%>M</td>
-                <td class="text-center"><%= link_to 'View Transactions', transactions_path(id: portfolio.id), class: "text-primary-700 text-sm font-medium"%> | <%= link_to 'Trade', trade_path(portfolio.symbol), class: "text-primary-700 text-sm font-medium"%></td>
+                <td class="text-center"><%= link_to 'View Transactions', transactions_path(id: stock.id), class: "text-primary-700 text-sm font-medium"%> | <%= link_to 'Trade', trade_path(stock.symbol), class: "text-primary-700 text-sm font-medium"%></td>
             <tr>
         <% end %>
     </tbody>
