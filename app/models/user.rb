@@ -16,7 +16,7 @@ class User < ApplicationRecord
     (0...50).map {('a'..'z').to_a[rand(26)]}.join
   end
     
-  def random_six_digits
+  def random_digits
     rand.to_s[2..7]
   end
 
@@ -26,15 +26,31 @@ class User < ApplicationRecord
    self.save
   end
   
-
-   def generate_verification_code
+  def generate_verification_code
     self.verification_code = random_six_digits
     
     self.save
-   end
+  end
    
   def generate_password_reset_token
     self.password_reset_token = random_string
+
+    self.save
+  end
+
+  def insufficient_balance?(transaction_params)
+    self.balance < total_price(transaction_params)
+  end
+
+  def deduct_balance!(transaction_params)
+    self.balance -= total_price(transaction_params)
+
+    self.save
+  end
+
+  def add_balance!(transaction_params)
+    self.balance += total_price(transaction_params)
+
     self.save
   end
 
@@ -43,4 +59,11 @@ class User < ApplicationRecord
   def reset_password_params
     params.permit(:email, :token, :password, :password_confirmation)
   end
+
+  def total_price(transaction_params)
+    stock_amount = transaction_params[:amount].to_d
+    stock_price = transaction_params[:price].to_d
+    total_price = stock_amount * stock_price
+  end
+
 end
