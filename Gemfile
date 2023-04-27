@@ -76,5 +76,5 @@ gem 'sendgrid-ruby'
 gem 'faraday'
 gem 'mail'
 gem "rails_charts"
-gem "stock_quote", '~> 3.0.0'
 gem 'kaminari'
+gem 'rest-client'
