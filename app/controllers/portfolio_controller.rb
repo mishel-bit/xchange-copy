@@ -3,7 +3,7 @@ class PortfolioController < ApplicationController
   layout 'stacked'
 
   def index
-    @portfolios = @user.portfolios
+    @user_stocks = @user.stocks
   end
 
 end
