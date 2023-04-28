@@ -64,12 +64,19 @@ group :development do
   # gem "spring"
 end
 
-group :test do
+group :development,:test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 6.0.0'
+  gem 'factory_bot_rails'
+end
+
+gem 'simplecov', require: false, group: :test
 
 gem "tailwindcss-rails", "~> 2.0"
 gem 'sendgrid-ruby'
@@ -78,3 +85,4 @@ gem 'mail'
 gem "rails_charts"
 gem 'kaminari'
 gem 'rest-client'
+gem 'faker'
