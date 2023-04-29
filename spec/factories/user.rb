@@ -6,6 +6,7 @@ FactoryBot.define do
         admin { false }
         email_confirmed { true }
         account_status { 'approved' }
+        balance { 1000 }
     end
 
     trait :admin do
