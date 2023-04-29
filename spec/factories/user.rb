@@ -22,4 +22,9 @@ FactoryBot.define do
     trait :pending do
         account_status { 'pending' }
     end
+
+    trait :new do
+        email_confirmed { false }
+        account_status { 'pending' }
+    end
 end

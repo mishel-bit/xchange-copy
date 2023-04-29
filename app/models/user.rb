@@ -27,7 +27,7 @@ class User < ApplicationRecord
   end
   
   def generate_verification_code
-    self.verification_code = random_six_digits
+    self.verification_code = random_digits
     
     self.save
   end
