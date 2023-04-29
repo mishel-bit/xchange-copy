@@ -1,5 +1,6 @@
 class Stock < ApplicationRecord
     validates :symbol, uniqueness: { scope: :user_id }, presence: true
+    validates(:company_name, :amount, presence: true)
     belongs_to :user
     has_many :transactions
 

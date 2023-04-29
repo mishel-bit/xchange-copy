@@ -73,7 +73,7 @@ class UserController < ApplicationController
     @user = User.find_by_email(cookies.encrypted[:user_id])
     if @user
       if @user.verification_code === code_params[:verification_code].to_i
-        if @user.update(:email_confirmed => true)
+        if @user.update(email_confirmed: true)
           UserMailer.send_pending_email(@user).deliver_later
           redirect_to account_path
         end
