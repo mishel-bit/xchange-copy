@@ -9,6 +9,11 @@ RSpec.describe 'view', type: :system do
   let(:user) { FactoryBot.create(:user) }
   let(:admin) { FactoryBot.create(:user,:admin) }
 
+  scenario 'home as guest' do
+    visit root_path
+    expect(page).to have_content 'Sign in'
+  end
+
   scenario 'transactions as admin' do
     sign_in_with admin
     visit admin_transactions_path
@@ -25,6 +30,13 @@ RSpec.describe 'view', type: :system do
     visit transactions_path
     expect(page).to have_content 'Price'
   end
+  # new
+  # scenario 'transactions according to stock as user' do
+  #   sign_in_with user
+  #   buy_stock("1")
+  #   visit transactions_path(@user.stock.first)
+  #   expect(page).to have_content @user.stock.first.symbol
+  # end
 
   scenario 'wallet as user' do
     sign_in_with user

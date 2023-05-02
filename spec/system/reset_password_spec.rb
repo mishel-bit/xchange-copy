@@ -7,7 +7,7 @@ RSpec.describe 'user', type: :system do
     driven_by(:rack_test)
   end
 
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:user,password_reset_token: "123456") }
   
   scenario 'forgot password with valid email' do
     visit sign_in_path
@@ -25,4 +25,12 @@ RSpec.describe 'user', type: :system do
     expect(page).to have_content 'Invalid email'
   end
 
+  scenario 'reset password' do
+    visit reset_password_path(user.password_reset_token)
+    expect(page).to have_content 'Reset Password'
+    fill_in 'Password', with: user.password
+    fill_in 'Confirm Password', with: user.password_confirmation
+    click_on('Submit new password')
+    expect(page).to have_content 'Password reset successful'
+  end
 end
