@@ -11,7 +11,7 @@ RSpec.describe 'verify', type: :system do
   scenario 'verify email' do
     sign_in_with new_user
     expect(page).to have_content 'Verify'
-    fill_in 'Verification code', with: new_user.verification_code
+    fill_in 'user[verification_code]', with: new_user.verification_code
     click_on('Submit')
     expect(page).to have_content 'Your Account'
   end

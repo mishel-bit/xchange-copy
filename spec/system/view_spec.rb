@@ -30,13 +30,13 @@ RSpec.describe 'view', type: :system do
     visit transactions_path
     expect(page).to have_content 'Price'
   end
-  # new
-  # scenario 'transactions according to stock as user' do
-  #   sign_in_with user
-  #   buy_stock("1")
-  #   visit transactions_path(@user.stock.first)
-  #   expect(page).to have_content @user.stock.first.symbol
-  # end
+ 
+  scenario 'transactions according to stock as user' do
+    sign_in_with user
+    buy_stock("1")
+    visit transactions_path(user.stocks.first)
+    expect(page).to have_content user.stocks.first.symbol
+  end
 
   scenario 'wallet as user' do
     sign_in_with user

@@ -1,7 +1,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'logout', type: :system do
+RSpec.describe 'sign out', type: :system do
   before do
     driven_by(:rack_test)
   end

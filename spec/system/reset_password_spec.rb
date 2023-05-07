@@ -12,7 +12,7 @@ RSpec.describe 'user', type: :system do
   scenario 'forgot password with valid email' do
     visit sign_in_path
     click_on('Forgot Password?')
-    fill_in 'Email', with: user.email
+    fill_in 'user[email]', with: user.email
     click_on('Send Password Reset Email')
     expect(page).to have_content 'A password reset link has been sent to your email'
   end
@@ -20,7 +20,7 @@ RSpec.describe 'user', type: :system do
   scenario 'forgot password with invalid email' do
     visit sign_in_path
     click_on('Forgot Password?')
-    fill_in 'Email', with: "invalid@email.com"
+    fill_in 'user[email]', with: "invalid@email.com"
     click_on('Send Password Reset Email')
     expect(page).to have_content 'Invalid email'
   end
@@ -28,8 +28,8 @@ RSpec.describe 'user', type: :system do
   scenario 'reset password' do
     visit reset_password_path(user.password_reset_token)
     expect(page).to have_content 'Reset Password'
-    fill_in 'Password', with: user.password
-    fill_in 'Confirm Password', with: user.password_confirmation
+    fill_in 'user[password]', with: user.password
+    fill_in 'user[password_confirmation]', with: user.password_confirmation
     click_on('Submit new password')
     expect(page).to have_content 'Password reset successful'
   end

@@ -26,9 +26,9 @@ RSpec.describe 'admin dashboard', type: :system do
   scenario 'create user' do
     sign_in_with admin
     visit new_admin_user_path
-    fill_in 'Email', with: new_user.email
-    fill_in 'Password', with: new_user.password
-    fill_in 'Confirm Password', with: new_user.password_confirmation
+    fill_in 'user[email]', with: new_user.email
+    fill_in 'user[password]', with: new_user.password
+    fill_in 'user[password_confirmation]', with: new_user.password_confirmation
     click_on('Submit')
   end
 

@@ -10,7 +10,7 @@ RSpec.describe 'deposit', type: :system do
   scenario 'money' do
     sign_in_with user
     click_on('Wallet')
-    fill_in 'Money', with: "100"
+    fill_in 'money', with: "100"
     click_on('Deposit')
     expect(page).to have_content "Deposit Successful"
   end
