@@ -27,7 +27,7 @@ class User < ApplicationRecord
   end
   
   def generate_verification_code
-    self.verification_code = random_six_digits
+    self.verification_code = random_digits
     
     self.save
   end
@@ -54,6 +54,12 @@ class User < ApplicationRecord
     self.save
   end
 
+  def deposit!(params)
+    self.balance += params[:money].to_d
+
+    self.save
+  end
+
   private
 
   def reset_password_params
@@ -61,9 +67,7 @@ class User < ApplicationRecord
   end
 
   def total_price(transaction_params)
-    stock_amount = transaction_params[:amount].to_d
-    stock_price = transaction_params[:price].to_d
-    total_price = stock_amount * stock_price
+    transaction_params[:amount].to_d * transaction_params[:price].to_d
   end
 
 end

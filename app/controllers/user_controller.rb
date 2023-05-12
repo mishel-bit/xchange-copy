@@ -9,25 +9,24 @@ class UserController < ApplicationController
   #post /sign_up
   def new_account
     @user = User.new(email: sign_up_params[:email], password: sign_up_params[:password])
-    if @user.save
+    if @user.valid?
         if sign_up_params[:password_confirmation].empty?
             @user.errors.add(:password,"confirmation can't be blank")
         else
-            if @user.valid?
-                @user.save
-                @user.generate_verification_code
-                UserMailer.send_verification_email(@user).deliver_later
-                cookies.encrypted[:authorization] = @user.token
-                cookies.encrypted[:user_id] = @user.email
-                if @user.email_confirmed?
-                  redirect_to root_path
-                else
-                  redirect_to verify_path
-                end
-                
+          if @user.password === sign_up_params[:password_confirmation]
+            @user.save
+            @user.generate_verification_code
+            UserMailer.send_verification_email(@user).deliver_later
+            cookies.encrypted[:authorization] = @user.token
+            cookies.encrypted[:user_id] = @user.email
+            if @user.email_confirmed?
+              redirect_to root_path
             else
-                @user.errors.add(:password,"not equal")  
-            end  
+              redirect_to verify_path
+            end
+          else
+              @user.errors.add(:password,"not equal")  
+          end  
         end
     end
     render :sign_up, status: :unprocessable_entity if @user.errors.count > 0
@@ -74,7 +73,7 @@ class UserController < ApplicationController
     @user = User.find_by_email(cookies.encrypted[:user_id])
     if @user
       if @user.verification_code === code_params[:verification_code].to_i
-        if @user.update(:email_confirmed => true)
+        if @user.update(email_confirmed: true)
           UserMailer.send_pending_email(@user).deliver_later
           redirect_to account_path
         end

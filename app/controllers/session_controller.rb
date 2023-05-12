@@ -15,22 +15,23 @@ class SessionController < ApplicationController
         @user = User.new(email: user_params[:email], password: user_params[:password])
         if @user.email.empty?
             @user.errors.add(:email,"can't be blank")
-        elsif @user.password.empty?
-            @user.errors.add(:password,"can't be blank")
-        else 
-            @user = User.find_by(email: user_params[:email])
-            if @user && @user.authenticate(user_params[:password])
-                cookies.encrypted[:authorization] = @user.token
-                cookies.encrypted[:user_id] = @user.email
-                if @user.email_confirmed 
-                    redirect_to root_path
-                else
-                    redirect_to verify_path
-                end
-            else
-                @user.errors.add(:email,"/ Password is invalid")
-            end                
         end
+        if @user.password.nil?
+            @user.errors.add(:password,"can't be blank")
+        end
+        @valid_user = User.find_by(email: user_params[:email])
+        if @valid_user && @valid_user.authenticate(user_params[:password])
+            cookies.encrypted[:authorization] = @valid_user.token
+            cookies.encrypted[:user_id] = @valid_user.email
+            if @valid_user.email_confirmed 
+                redirect_to root_path
+            else
+                redirect_to verify_path
+            end
+        else
+            @user.errors.add(:email,"/ Password is invalid")  
+        end
+
         render :sign_in, status: :unprocessable_entity if @user.errors.count > 0
     end
 

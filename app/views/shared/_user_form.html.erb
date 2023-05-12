@@ -3,7 +3,7 @@
     <%= type === "sign_up" ? 'Sign up' : 'Sign in to your account'%>
 </h2>
 
-<div class="mt-5 space-y-6">
+<div id="user-form" class="mt-5 space-y-6">
     <%= form_with model: user, url: path, local: true do |f| %>
         <% if flash[:notice] %>
             <div class="notice flex p-4 text-sm text-gray-800 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-300" role="alert">
@@ -25,17 +25,17 @@
         <% end %>
         <div>
             <%= f.label :Email, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-            <%= f.text_field :email, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
+            <%= f.text_field :email, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
         </div>
-        <div>
+        <div >
             <%= f.label :Password, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"  %>
-            <%= f.password_field :password, class:"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
+            <%= f.password_field :password, class:"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
         </div>
         <div>
             <%if type === "sign_up"%>
                 <div>
                     <%= f.label 'Confirm Password',  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-                    <%= f.password_field :password_confirmation, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
+                    <%= f.password_field :password_confirmation, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-300 focus:border-secondary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-secondary-500 dark:focus:border-secondary-500" %>
                 </div>
                 <%=f.submit 'Create Account', class: "w-full relative mt-5 px-5 py-3 text-base font-medium text-center text-white bg-secondary-300 rounded-full hover:bg-secondary-600 focus:ring-4 focus:ring-secondary-300 sm:w-auto dark:bg-secondary-600 dark:hover:bg-secondary-700 dark:focus:ring-secondary-800"%>
 

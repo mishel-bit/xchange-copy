@@ -12,12 +12,12 @@
                 <%= f.hidden_field :price, value: @quote.latest_price %>
                 <div>
                     <%= f.label :Price,  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
-                    <%= f.text_field :preview_price, value: @quote.latest_price, disabled: true, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-700 focus:border-primary-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-700 dark:focus:border-primary-700" %>
+                    <%= f.text_field :preview_price, value: @quote.latest_price, disabled: true, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-700 focus:border-primary-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary-700 dark:focus:border-primary-700" %>
                 </div>
 
                 <div>
                     <%= f.label :Amount,  class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"%>
-                    <%= f.number_field :amount, min: 0, step: :any, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-700 focus:border-primary-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-700 dark:focus:border-primary-700" %>
+                    <%= f.number_field :amount, min: 0, step: :any, placeholder: "#{ type } amount", class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm placeholder-gray-500 placeholder-opacity-0 rounded-lg focus:ring-primary-700 focus:border-primary-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-primary-700 dark:focus:border-primary-700" %>
                 </div> 
                  <%=f.submit type === "buy" ? 'Buy' : 'Sell', class: "w-full mt-5 px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-700 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"%>
             </div>   
